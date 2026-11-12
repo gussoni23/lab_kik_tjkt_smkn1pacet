@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Media Pembelajaran Interaktif KIK Kelas XI: Lab Wirausaha.">
+<meta name="theme-color" content="#1D5DA6">
+<style>html{-webkit-text-size-adjust:100%}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Lab Wirausaha KIK</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: konsol satu kolom (maks 920px) di atas kertas gambar teknik bergrid; tiap unit diberi warna pin kabel UTP T568B. */
+:root{
+  --bg:#ECEFF3; --grid:#DDE3EA; --surface:#FFFFFF; --surface-2:#E3E8EE; --surface-3:#F6F8FA;
+  --ink:#111922; --muted:#55606C; --line:#C6CFD9;
+  --pri:#1D5DA6; --pri-soft:#DCE7F5; --on-pri:#FFFFFF;
+  --amb:#C9650F; --amb-soft:#FBE6D2;
+  --err:#C0392B; --err-soft:#F6DDD9;
+  --ok:#1D8048; --ok-soft:#D9F0E2;
+  --c-o:#E07A1F; --c-g:#249652; --c-b:#2462B0; --c-w:#FFFFFF;
+  --term-bg:#0F1720; --term-fg:#D6E2EE; --term-dim:#7F90A2; --term-acc:#62D394; --term-line:#2A3846;
+  --f-display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --r:4px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0B131C; --grid:#132030; --surface:#111C28; --surface-2:#182736; --surface-3:#0E1823;
+  --ink:#DAE4EE; --muted:#8D9CAC; --line:#26374A;
+  --pri:#5AA4FF; --pri-soft:#12284A; --on-pri:#071019;
+  --amb:#FF9C45; --amb-soft:#3A230E;
+  --err:#FF7465; --err-soft:#3B1613;
+  --ok:#4CCF86; --ok-soft:#0F2F1E;
+  --c-o:#FF9A45; --c-g:#45C97E; --c-b:#5AA4FF; --c-w:#E6EDF4;
+  --term-bg:#060B11; --term-fg:#D6E2EE; --term-dim:#7F90A2; --term-acc:#62D394; --term-line:#22303E; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0B131C; --grid:#132030; --surface:#111C28; --surface-2:#182736; --surface-3:#0E1823;
+  --ink:#DAE4EE; --muted:#8D9CAC; --line:#26374A;
+  --pri:#5AA4FF; --pri-soft:#12284A; --on-pri:#071019;
+  --amb:#FF9C45; --amb-soft:#3A230E;
+  --err:#FF7465; --err-soft:#3B1613;
+  --ok:#4CCF86; --ok-soft:#0F2F1E;
+  --c-o:#FF9A45; --c-g:#45C97E; --c-b:#5AA4FF; --c-w:#E6EDF4;
+  --term-bg:#060B11; --term-fg:#D6E2EE; --term-dim:#7F90A2; --term-acc:#62D394; --term-line:#22303E; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background-color:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.wrap{max-width:920px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);line-height:1.15;text-wrap:balance;margin:0;font-weight:700}
+h1{font-size:clamp(2.2rem,6.5vw,3.6rem);text-transform:uppercase;letter-spacing:-.01em}
+h2{font-size:clamp(1.5rem,4vw,2.1rem)}
+h3{font-size:1.15rem;font-weight:600}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--amb);outline-offset:2px}
+.muted{color:var(--muted)}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.eyebrow{font-family:var(--f-mono);font-size:.78rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--pri)}
+.eyebrow::before{content:"// ";color:var(--muted)}
+
+/* bilah atas */
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line);margin-bottom:24px;margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)));padding-inline:max(16px,env(safe-area-inset-left,0px))}
+.topbar .wrap{display:flex;align-items:center;gap:12px;min-height:56px;flex-wrap:wrap;padding-block:8px}
+.brand{display:flex;align-items:center;gap:10px;background:none;border:0;padding:0;font-family:var(--f-display);font-weight:700;font-size:1.15rem;text-transform:uppercase;letter-spacing:.02em}
+.brand svg{width:32px;height:32px}
+.topbar .who{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:.85rem;color:var(--muted);min-width:0;font-family:var(--f-mono)}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);border-radius:2px;padding:3px 10px;font-size:.8rem;font-weight:600;color:var(--ink);white-space:nowrap;font-family:var(--f-mono)}
+.chip.score{background:var(--term-bg);color:var(--term-acc);border-color:var(--term-bg)}
+
+/* tombol */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:var(--r);padding:10px 20px;font-weight:600;border:1.5px solid var(--pri);background:var(--pri);color:var(--on-pri);font-family:var(--f-mono);font-size:.92rem;letter-spacing:.01em;transition:background .12s,color .12s}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:var(--surface);color:var(--pri)}
+.btn.ghost:hover{background:var(--pri-soft)}
+.btn.small{padding:6px 12px;font-size:.82rem}
+.btn[disabled]{opacity:.4;cursor:not-allowed;filter:none}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.between{justify-content:space-between}
+
+.screen{display:flex;flex-direction:column;gap:24px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:24px;position:relative}
+@media (max-width:520px){.panel{padding:18px}}
+
+/* sampul */
+.cover{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center}
+.cover > *{min-width:0}
+@media (max-width:720px){.cover{grid-template-columns:1fr}.cover-art{order:-1;max-width:340px}}
+.cover-art{width:100%;margin-inline:auto}
+.cover-art .node{fill:var(--surface);stroke:var(--ink);stroke-width:2}
+.cover-art .sw{fill:var(--term-bg);stroke:var(--ink);stroke-width:2}
+.cover-art .t{font-family:var(--f-mono);font-size:13px;font-weight:600;fill:var(--ink)}
+.cover-art .ts{font-family:var(--f-mono);font-size:12px;font-weight:600;fill:var(--term-acc)}
+.cover-art .cap{font-family:var(--f-mono);font-size:10px;fill:var(--muted)}
+.lead{font-size:1.08rem;color:var(--muted);max-width:52ch}
+.meta-line{display:flex;flex-wrap:wrap;gap:8px}
+.field{display:flex;flex-direction:column;gap:6px;flex:1 1 200px;min-width:0}
+.field label{font-size:.8rem;font-weight:600;font-family:var(--f-mono);text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+input[type=text],textarea,select{font:inherit;color:var(--ink);background:var(--surface-3);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;width:100%}
+textarea{min-height:96px;resize:vertical}
+input[type=text]:focus,textarea:focus,select:focus{border-color:var(--pri);outline:none;box-shadow:0 0 0 3px var(--pri-soft)}
+
+/* petunjuk */
+.guide-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px}
+.guide-item{display:flex;flex-direction:column;gap:8px}
+.guide-item svg{width:36px;height:36px;color:var(--pri)}
+
+/* catatan sistem */
+.sys{display:flex;gap:12px;align-items:flex-start;background:var(--surface-3);border:1px solid var(--line);border-left:3px solid var(--pri);border-radius:var(--r);padding:12px 14px}
+.sys p{min-width:0}
+.sys-tag{flex:0 0 auto;font-family:var(--f-mono);font-size:.72rem;font-weight:600;background:var(--pri);color:var(--on-pri);padding:2px 6px;border-radius:2px;margin-top:3px}
+
+/* peta belajar */
+.map-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.unit-card{display:flex;flex-direction:column;gap:10px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:0 20px 20px;transition:border-color .15s;overflow:hidden}
+.unit-card:hover{border-color:var(--pri)}
+.pin{display:block;height:6px;margin:0 -20px 6px;background:var(--pc)}
+.pin[data-w="1"]{background:repeating-linear-gradient(90deg,var(--pc) 0 14px,var(--c-w) 14px 24px)}
+.unit-card .top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.ico{width:42px;height:42px;border-radius:var(--r);border:1px solid var(--line);background:var(--surface-3);color:var(--pri);display:grid;place-items:center}
+.ico svg{width:24px;height:24px}
+.unit-card .num{font-family:var(--f-mono);font-size:.75rem;color:var(--muted);text-align:right}
+.bar{height:6px;border-radius:1px;background:var(--surface-2);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--ok)}
+.tp{display:flex;gap:6px;flex-wrap:wrap}
+.tp span{font-family:var(--f-mono);font-size:.72rem;border:1px solid var(--line);border-radius:2px;padding:1px 6px}
+.eval-card{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--surface);border:1px solid var(--pri);border-radius:var(--r);padding:20px}
+
+/* layar unit */
+.unit-head{display:flex;gap:16px;align-items:center}
+.unit-head .ico{width:54px;height:54px;flex:0 0 54px}
+.unit-head .ico svg{width:30px;height:30px}
+.unit-head > div{min-width:0}
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--surface)}
+.step{border:0;border-right:1px solid var(--line);background:transparent;padding:8px 6px;font-size:.82rem;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:2px;line-height:1.2;min-width:0}
+.step:last-child{border-right:0}
+.step small{font-family:var(--f-mono);color:var(--muted);font-size:.72rem}
+.step.on{background:var(--pri);color:var(--on-pri)}
+.step.on small{color:var(--on-pri)}
+.step.done:not(.on) small{color:var(--ok)}
+.step.done:not(.on) small::after{content:" ✓"}
+@media (max-width:520px){.step span{font-size:.7rem}}
+.stack{display:flex;flex-direction:column;gap:16px}
+ul.clean{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+ul.clean li::marker{color:var(--pri)}
+.qprompt{border-left:3px solid var(--amb);padding:4px 0 4px 14px;font-weight:600}
+
+/* materi */
+details.card{border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+details.card summary{list-style:none;padding:14px 16px;font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:12px;cursor:pointer}
+details.card summary::-webkit-details-marker{display:none}
+details.card summary::after{content:"[+]";font-family:var(--f-mono);font-size:.9rem;color:var(--pri)}
+details.card[open] summary::after{content:"[−]"}
+details.card[open] summary{border-bottom:1px dashed var(--line)}
+details.card .body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:10px}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:.74rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:var(--surface-3)}
+
+/* aktivitas */
+.act-title{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.sort-list{display:flex;flex-direction:column;gap:8px}
+.sort-item{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;border:1px solid var(--line);border-left:3px solid var(--line);border-radius:var(--r);padding:10px 14px;background:var(--surface)}
+.sort-item > p{flex:1 1 260px;min-width:0}
+.sort-item.ok{border-left-color:var(--ok);background:var(--ok-soft)}
+.sort-item.no{border-left-color:var(--err);background:var(--err-soft)}
+.opt-row{display:flex;gap:6px;flex-wrap:wrap}
+.pill{border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:5px 12px;font-weight:600;font-size:.84rem;font-family:var(--f-mono)}
+.pill:hover{border-color:var(--pri)}
+.pill.sel{background:var(--pri);color:var(--on-pri);border-color:var(--pri)}
+.fb{font-size:.9rem;font-weight:600}
+.fb.ok{color:var(--ok)} .fb.no{color:var(--err)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+.two > *{min-width:0}
+@media (max-width:720px){.two{grid-template-columns:1fr}}
+.slider-row{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:center}
+.slider-row input{grid-column:1/-1;width:100%;accent-color:var(--pri)}
+svg .grid{stroke:var(--line);fill:none}
+svg .axis-t{fill:var(--muted);font-family:var(--f-mono);font-size:10.5px}
+svg .poly{fill:var(--pri);fill-opacity:.18;stroke:var(--pri);stroke-width:2}
+svg .dot{fill:var(--pri)}
+svg .dot-best{fill:var(--amb)}
+svg .dot-t{fill:var(--on-pri);font-family:var(--f-mono);font-size:11px;font-weight:600}
+svg .zone{fill:var(--ok-soft)}
+svg .bar-bg{fill:var(--surface-2)}
+svg .bar-f{fill:var(--pri)}
+svg .bar-low{fill:var(--err)}
+svg .lbl{fill:var(--ink);font-family:var(--f-body);font-size:12px}
+svg .num-t{fill:var(--ink);font-family:var(--f-mono);font-size:12px;font-weight:600}
+.scamper{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.sc{border:1px solid var(--line);border-radius:var(--r);padding:14px;background:var(--surface);display:flex;flex-direction:column;gap:6px}
+.sc .L{font-family:var(--f-mono);font-weight:600;font-size:1.6rem;line-height:1;color:var(--amb)}
+.sc .ex{font-size:.9rem;background:var(--amb-soft);border-radius:var(--r);padding:8px 10px}
+.idea-list{display:flex;flex-direction:column;gap:8px}
+.idea{display:grid;grid-template-columns:28px 1fr auto auto auto;gap:8px;align-items:center;border-bottom:1px dashed var(--line);padding-bottom:8px}
+.idea .n{font-family:var(--f-mono);font-weight:600;color:var(--muted)}
+.idea .t{min-width:0;overflow-wrap:anywhere}
+.idea select{width:auto;padding:4px 6px;font-size:.85rem}
+.idea .x{border:0;background:none;color:var(--muted);font-size:1.1rem;padding:2px 6px}
+@media (max-width:520px){.idea{grid-template-columns:24px 1fr auto}.idea .t{grid-column:2/4}.idea select:first-of-type{grid-column:2}}
+.swot{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.swot > div{padding:12px;min-height:92px;background:var(--surface);min-width:0}
+.swot h4{margin:0 0 6px;font-family:var(--f-mono);font-size:.85rem;color:var(--pri)}
+.swot ul{margin:0;padding-left:1.1em;font-size:.88rem}
+.persona{background:var(--surface-3);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:10px}
+.persona .ph{display:flex;gap:12px;align-items:center}
+.avatar{width:48px;height:48px;border-radius:var(--r);background:var(--pri);display:grid;place-items:center;font-family:var(--f-mono);font-weight:600;font-size:1.3rem;color:var(--on-pri);flex:0 0 48px}
+.persona dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:.92rem}
+.persona dt{color:var(--muted);font-weight:600;font-family:var(--f-mono);font-size:.8rem;padding-top:2px}
+.persona dd{margin:0;min-width:0;overflow-wrap:anywhere}
+.order-pool{display:flex;flex-wrap:wrap;gap:8px}
+.order-seq{display:flex;flex-direction:column;gap:6px}
+.order-seq div{border:1px solid var(--pri);background:var(--pri-soft);border-radius:var(--r);padding:8px 12px}
+.order-seq div b{font-family:var(--f-mono);margin-right:8px}
+.shake{animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.pov-out{font-size:1.08rem;font-weight:600;background:var(--surface-3);border:1px dashed var(--pri);border-radius:var(--r);padding:16px}
+.pov-out em{font-style:normal;color:var(--pri)}
+.org-tbl input{width:52px;text-align:center;font-family:var(--f-mono);padding:6px 4px}
+.org-tbl td,.org-tbl th{text-align:center;white-space:nowrap}
+.org-tbl td:first-child,.org-tbl th:first-child{text-align:left;font-family:var(--f-mono)}
+.org-tbl tfoot td{font-family:var(--f-mono);font-weight:600;background:var(--surface-3)}
+.post{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);overflow:hidden;max-width:380px}
+.post .ph{display:flex;gap:10px;align-items:center;padding:10px 12px;font-weight:600;font-size:.9rem}
+.post .ph i{width:28px;height:28px;border-radius:50%;background:var(--amb);display:block}
+.post .img{aspect-ratio:1/1;max-width:100%;background:var(--amb-soft);display:grid;place-items:center}
+.post .cap{padding:12px;font-size:.9rem;display:flex;flex-direction:column;gap:6px}
+.post .tags{color:var(--pri);font-weight:600}
+.radio-group{display:flex;flex-direction:column;gap:8px}
+.radio-group h4{margin:0;font-size:.78rem;font-family:var(--f-mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.radio-opt{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;cursor:pointer;background:var(--surface)}
+.radio-opt input{margin-top:5px;accent-color:var(--pri)}
+.radio-opt:has(input:checked){border-color:var(--pri);background:var(--pri-soft)}
+
+/* kuis */
+.quiz{display:flex;flex-direction:column;gap:18px}
+.q{display:flex;flex-direction:column;gap:10px;border-bottom:1px dashed var(--line);padding-bottom:18px}
+.q:last-child{border-bottom:0}
+.q .qn{font-family:var(--f-mono);font-size:.78rem;color:var(--muted)}
+.q .qt{font-weight:600}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:10px 14px;display:flex;gap:12px}
+.opt .k{font-family:var(--f-mono);font-weight:600;color:var(--muted)}
+.opt:hover:not([disabled]){border-color:var(--pri)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--err);background:var(--err-soft)}
+.opt.pick{border-color:var(--pri);background:var(--pri-soft)}
+.opt[disabled]{cursor:default}
+.why{font-size:.92rem;background:var(--surface-3);border:1px solid var(--line);border-radius:var(--r);padding:10px 14px}
+
+/* panel log (terminal) */
+.struk{background:var(--term-bg);color:var(--term-fg);border:1px solid var(--term-line);border-radius:var(--r);padding:18px 20px;font-family:var(--f-mono);font-size:.88rem;max-width:480px;width:100%;margin-inline:auto}
+.struk .c{text-align:center}
+.struk hr{border:0;border-top:1px dashed var(--term-line);margin:12px 0}
+.struk .ln{display:flex;justify-content:space-between;gap:12px}
+.struk .ln span:first-child{min-width:0;color:var(--term-dim)}
+.struk .ln span:last-child{color:var(--term-fg)}
+.struk .big{font-size:1.5rem;font-weight:600;color:var(--term-acc)!important}
+.struk .muted{color:var(--term-dim)}
+.grade{display:inline-block;font-family:var(--f-mono);font-weight:600;font-size:2.6rem;line-height:1;color:var(--term-acc)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--term-bg);color:var(--term-acc);font-family:var(--f-mono);padding:10px 18px;border-radius:var(--r);font-weight:600;font-size:.85rem;z-index:20;border:1px solid var(--term-line)}
+.nav-foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+
+<header class="topbar"><div class="wrap">
+  <button class="brand" id="brandBtn" type="button" aria-label="Ke Peta Belajar">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><use href="#logo-node"/></svg>Lab Wirausaha
+  </button>
+  <div class="who"><span id="whoName"></span><span class="chip score" id="whoScore" title="Rata-rata kuis unit">0 / 6 kuis</span></div>
+</div></header>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="logo-node" viewBox="0 0 64 64">
+      <path d="M20 22V10M32 22V6M44 22V10" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/>
+      <rect x="6" y="22" width="52" height="22" rx="3" fill="var(--term-bg)" stroke="var(--ink)" stroke-width="2.5"/>
+      <circle cx="16" cy="33" r="3" fill="var(--term-acc)"/><circle cx="25" cy="33" r="3" fill="var(--amb)"/>
+      <rect x="34" y="29" width="7" height="8" rx="1" fill="var(--c-w)"/><rect x="44" y="29" width="7" height="8" rx="1" fill="var(--c-w)"/>
+      <path d="M22 44v12M42 44v12" stroke="var(--c-b)" stroke-width="3" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<main class="wrap" id="main"></main>
+
+<script>
+/* ===== ikon ===== */
+const ICON = {
+  sprout:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-9"/><path d="M12 12C12 7 8 5 4 5c0 4 3 7 8 7z"/><path d="M12 14c0-4 3-6 8-6 0 4-3 6-8 6z"/><path d="M7 21h10"/></svg>',
+  bulb:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.8.8 1 1.6 1 2.5h6c0-.9.2-1.7 1-2.5A6 6 0 0 0 12 3z"/></svg>',
+  scope:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.8-4.8"/><path d="M8 12.5v-2M10.5 12.5V8M13 12.5V10"/></svg>',
+  heart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 11.5S7 8.6 7 5.8A2.6 2.6 0 0 1 12 4.7a2.6 2.6 0 0 1 5 1.1c0 2.8-5 5.7-5 5.7z"/><path d="M3 15h4l3 2h5a2 2 0 0 0 0-4h-3"/><path d="M15 15l4.5-2a1.6 1.6 0 0 1 1.5 2.7L15 20H3"/></svg>',
+  flask:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6l-5.5 9.5A1.7 1.7 0 0 0 6 21h12a1.7 1.7 0 0 0 1.5-2.5L14 9V3"/><path d="M7.5 15h9"/></svg>',
+  phone:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M11 18.5h2"/><path d="M9.5 10.5l2 1.5 3-4"/></svg>',
+  open:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h7l2 2h9v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M3 7V5a1 1 0 0 1 1-1h5l2 2"/></svg>',
+  hand:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V12"/><path d="M11 11.5V4a1.5 1.5 0 0 1 3 0v7.5"/><path d="M14 11.5V6a1.5 1.5 0 0 1 3 0v8a7 7 0 0 1-7 7h-.5a6 6 0 0 1-5-2.7L3 15.5a1.6 1.6 0 0 1 2.6-1.8L8 16"/></svg>',
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="m8 12 3 3 5-6"/></svg>',
+  pen:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>'
+};
+const say = (t) => `<div class="sys" role="note"><span class="sys-tag">INFO</span><p>${t}</p></div>`;
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/* ===== data unit (diringkas dari Modul Ajar KIK Fase F) ===== */
+const UNITS = [
+{ id:'u1', icon:'sprout', title:'Growth Mindset & Karakter Wirausaha', short:'Mindset', el:'Kreativitas', tpc:['1.1','1.2'],
+  tp:['Menjelaskan perbedaan fixed mindset vs. growth mindset dalam konteks wirausaha.','Mengidentifikasi minimal 5 karakter utama wirausaha sukses bidang F&B.','Merefleksikan kondisi mindset diri dan menyusun rencana pengembangan diri.'],
+  makna:'Kesuksesan usaha makanan/minuman tidak hanya ditentukan kualitas produk, tetapi terutama oleh kualitas mindset pemiliknya. Wirausahawan dengan growth mindset terus berinovasi, belajar dari kegagalan, dan bertumbuh bersama bisnisnya.',
+  pemantik:['Mengapa banyak warung makan enak tutup dalam setahun, sementara merek kopi kecil bisa berkembang menjadi ratusan cabang?','Apa yang membedakan seorang karyawan dengan seorang wirausahawan dalam menghadapi masalah?'],
+  materi:[
+    {h:'Konsep kreativitas', b:`<p>Kreativitas adalah kemampuan menghasilkan ide atau cara baru yang <b>bermanfaat</b>. Dalam usaha F&B, kreativitas terlihat dari rasa baru, kemasan, cara menjual, atau cara melayani.</p><ul class="clean"><li><b>Menciptakan</b>: membuat produk yang belum ada di sekitarmu.</li><li><b>Mengombinasikan</b>: menggabungkan dua hal, misalnya kopi + gula aren + pandan.</li><li><b>Memodifikasi</b>: mengubah produk lama, misalnya pisang goreng dijual dalam cup.</li></ul><p>Pendorongnya: rasa ingin tahu, masalah yang dirasakan pembeli, lingkungan, dan pengalaman.</p>`},
+    {h:'Fixed mindset vs. growth mindset (Carol Dweck)', b:`<div class="tbl-wrap"><table><thead><tr><th>Situasi</th><th>Fixed mindset</th><th>Growth mindset</th></tr></thead><tbody><tr><td>Gagal</td><td>"Aku memang tidak bakat."</td><td>"Apa yang bisa aku perbaiki?"</td></tr><tr><td>Tantangan</td><td>Dihindari agar tidak malu</td><td>Diambil sebagai kesempatan belajar</td></tr><tr><td>Kritik pembeli</td><td>Dianggap serangan</td><td>Dianggap data untuk memperbaiki produk</td></tr><tr><td>Sukses orang lain</td><td>Merasa terancam</td><td>Dipelajari caranya</td></tr></tbody></table></div><p>Mindset bisa diubah: mulai dengan menambahkan kata <b>"belum"</b>. "Aku belum bisa foto produk" membuka jalan untuk belajar.</p>`},
+    {h:'Lima karakter wirausaha F&B', b:`<ul class="clean"><li><b>Percaya diri</b>: berani menawarkan produk kepada orang yang belum dikenal.</li><li><b>Berani ambil risiko</b>: mencoba hal baru dengan perhitungan, misalnya uji varian baru dalam jumlah kecil dulu.</li><li><b>Inovatif</b>: terus mencari cara agar produk lebih baik atau berbeda.</li><li><b>Tekun</b>: tetap berjualan dan memperbaiki diri walau hari ini sepi.</li><li><b>Berorientasi nilai</b>: jujur soal bahan, menjaga kebersihan, menepati janji kepada pembeli.</li></ul>`},
+    {h:'Karyawan vs. wirausahawan', b:`<p>Saat bahan baku habis, karyawan biasanya melapor dan menunggu keputusan. Wirausahawan <b>mencari solusi dan menanggung akibat keputusannya</b>: mencari pemasok cadangan, mengganti menu sementara, lalu memberi tahu pelanggan.</p><p>Merek kopi dan ayam geprek lokal yang kini punya banyak cabang umumnya berawal dari satu gerai kecil. Yang membesarkan mereka adalah kebiasaan belajar dari pembeli, bukan modal besar sejak awal.</p>`}
+  ],
+  act:'mindset', proyek:'Buat <b>Papan Visi Wirausaha (Vision Board)</b> digital di Canva berisi: (1) foto/ilustrasi produk impian, (2) target omzet 1 tahun, (3) nilai-nilai bisnis, (4) karakter yang ingin dikembangkan. Tantangan minggu depan: wawancarai satu wirausahawan makanan/minuman di sekitarmu.',
+  refQ:'Apa satu hal yang paling mengubah cara pandangmu hari ini?',
+  quiz:[
+    {q:'Manakah ciri growth mindset?', o:['Menghindari tantangan agar tidak gagal','Memandang kegagalan sebagai bahan belajar','Menganggap bakat tidak bisa berubah','Merasa terancam oleh keberhasilan orang lain'], a:1, w:'Growth mindset melihat kegagalan sebagai informasi untuk perbaikan. Tiga pilihan lain adalah ciri fixed mindset.'},
+    {q:'Konsep fixed mindset dan growth mindset dikembangkan oleh …', o:['Howard Schultz','Philip Kotler','Carol Dweck','Tim Brown'], a:2, w:'Carol Dweck, psikolog dari Stanford University, yang memperkenalkan kedua istilah ini.'},
+    {q:'Pembeli mengeluh es kopimu terlalu manis. Respons yang menunjukkan growth mindset adalah …', o:['Mengabaikan karena pembeli lain tidak protes','Mencatat masukan lalu menguji takaran gula yang baru','Berhenti menjual es kopi','Menjelaskan bahwa resepmu sudah benar'], a:1, w:'Keluhan adalah data. Mencatat dan menguji takaran baru adalah cara belajar dari pembeli.'},
+    {q:'Contoh karakter "berani ambil risiko" yang tepat bagi pemula adalah …', o:['Langsung meminjam modal besar tanpa hitungan','Membuka 3 cabang di bulan pertama','Mencoba varian rasa baru dalam jumlah kecil untuk diuji dulu','Menjual semua produk di bawah harga pokok'], a:2, w:'Risiko yang baik adalah risiko terukur: dicoba kecil, dilihat hasilnya, baru diperbesar.'},
+    {q:'Yang paling membedakan wirausahawan dari karyawan saat menghadapi masalah adalah …', o:['Wirausahawan mencari solusi dan menanggung akibat keputusannya','Wirausahawan selalu punya modal lebih besar','Wirausahawan tidak pernah gagal','Wirausahawan menunggu instruksi atasan'], a:0, w:'Wirausahawan mengambil keputusan sendiri dan bertanggung jawab atas hasilnya.'}
+  ]},
+{ id:'u2', icon:'bulb', title:'Kreativitas & Eksplorasi Ide Produk F&B', short:'Ide Produk', el:'Kreativitas', tpc:['1.3','1.4','1.5'],
+  tp:['Menggunakan teknik brainstorming dan mind mapping untuk menghasilkan minimal 10 ide produk F&B.','Menganalisis tren produk F&B berdasarkan data marketplace dan media sosial.','Merancang identitas merek (nama, logo, tagline, warna) untuk produk pilihan.'],
+  makna:'Setiap produk F&B yang sukses berawal dari sebuah ide kreatif. Kemampuan menghasilkan dan menyeleksi ide adalah keterampilan inti setiap calon wirausahawan.',
+  pemantik:['Mengapa minuman boba bisa menjadi fenomena global? Apa yang membuatnya berbeda dari teh biasa?','Jika kamu punya modal Rp 500.000, produk makanan/minuman apa yang akan kamu buat?'],
+  materi:[
+    {h:'Teknik SCAMPER', b:`<div class="tbl-wrap"><table><thead><tr><th>Huruf</th><th>Arti</th><th>Pertanyaan pancingan</th></tr></thead><tbody><tr><td><b>S</b></td><td>Substitute</td><td>Bahan apa yang bisa diganti?</td></tr><tr><td><b>C</b></td><td>Combine</td><td>Apa yang bisa digabungkan?</td></tr><tr><td><b>A</b></td><td>Adapt</td><td>Ide dari tempat lain apa yang bisa ditiru dan disesuaikan?</td></tr><tr><td><b>M</b></td><td>Modify</td><td>Apa yang bisa diubah ukuran, bentuk, atau rasanya?</td></tr><tr><td><b>P</b></td><td>Put to other use</td><td>Bisa dipakai untuk apa lagi?</td></tr><tr><td><b>E</b></td><td>Eliminate</td><td>Apa yang bisa dihilangkan?</td></tr><tr><td><b>R</b></td><td>Reverse / Rearrange</td><td>Bagaimana jika urutan atau caranya dibalik?</td></tr></tbody></table></div>`},
+    {h:'Brainstorming, brainwriting, mind mapping', b:`<ul class="clean"><li><b>Brainstorming</b>: kelompok melontarkan ide sebanyak-banyaknya tanpa menilai dulu.</li><li><b>Brainwriting</b>: tiap orang menulis ide di kertas, lalu kertas diputar dan ide dikembangkan teman. Cocok untuk siswa yang pendiam.</li><li><b>Mind mapping</b>: satu kata kunci di tengah (misalnya "minuman sehat"), lalu bercabang ke bahan, rasa, kemasan, sasaran pembeli.</li></ul><p>Aturan utama: kumpulkan dulu <b>kuantitas</b>, baru seleksi <b>kualitas</b>.</p>`},
+    {h:'Membaca tren F&B', b:`<ul class="clean"><li><b>Google Trends</b>: bandingkan popularitas kata kunci dari waktu ke waktu, misalnya "boba", "kopi susu", "minuman sehat".</li><li><b>TikTok FYP & Instagram Explore</b>: amati produk yang sering muncul dan komentar penonton.</li><li><b>Marketplace</b>: buka kategori makanan, urutkan "Terlaris", catat harga dan ulasan.</li></ul><p>Tren dalam modul: minuman kekinian, kopi specialty, dan frozen food premium.</p>`},
+    {h:'Identitas merek (brand identity)', b:`<p>Lima elemen yang dinilai di rubrik modul: <b>nama, tagline, logo, warna, kemasan</b>.</p><ul class="clean"><li>Nama mudah diucap dan diingat, cocok dengan produk.</li><li>Tagline pendek, menjanjikan manfaat.</li><li>Logo sederhana, tetap jelas walau kecil (di stiker cup).</li><li>Warna 2–3 saja, dipakai konsisten.</li><li>Kemasan praktis dan mencantumkan nama produk.</li></ul><p>Logo dan kemasan dirancang di Canva memakai template F&B.</p>`}
+  ],
+  act:'scamper', proyek:'Susun <b>Portofolio Ide Produk</b>: (1) 10 ide dari brainstorming, (2) 1 ide terpilih beserta analisis tren, (3) brand identity lengkap (nama, tagline, logo Canva, palet warna, konsep kemasan).',
+  refQ:'Ide mana yang kamu pilih, dan data tren apa yang mendukungnya?',
+  quiz:[
+    {q:'Dalam SCAMPER, huruf S berarti …', o:['Simplify, menyederhanakan','Substitute, mengganti bahan atau komponen','Sell, menjual','Survey, melakukan survei'], a:1, w:'S = Substitute. Contoh: gula pasir diganti gula aren.'},
+    {q:'Ampas kopi diolah menjadi scrub atau pupuk tanaman. Ini contoh huruf SCAMPER …', o:['C, Combine','M, Modify','P, Put to other use','E, Eliminate'], a:2, w:'Bahan yang sama dipakai untuk kegunaan lain: Put to other use.'},
+    {q:'Untuk memilih satu ide terbaik dari 10 ide, modul menggunakan matriks …', o:['Kelayakan vs. keunikan','Harga vs. omzet','Rasa vs. aroma','Online vs. offline'], a:0, w:'Ide terbaik berada di kuadran yang layak dibuat sekaligus unik.'},
+    {q:'Manakah yang BUKAN elemen brand identity?', o:['Tagline','Logo','Harga pokok produksi','Palet warna'], a:2, w:'HPP adalah perhitungan biaya (dibahas di Kelas XII), bukan elemen identitas merek.'},
+    {q:'Alat yang tepat untuk membandingkan popularitas "kopi susu" dan "boba" selama 5 tahun adalah …', o:['WhatsApp Business','Google Trends','Canva','Google Form'], a:1, w:'Google Trends menampilkan grafik minat pencarian dari waktu ke waktu.'}
+  ]},
+{ id:'u3', icon:'scope', title:'Identifikasi Peluang Pasar & Tren Konsumen', short:'Peluang Pasar', el:'Kewirausahaan', tpc:['3.1'],
+  tp:['Mengidentifikasi minimal 3 segmen pasar untuk produk F&B menggunakan data primer dan sekunder.','Melakukan analisis SWOT untuk usaha makanan/minuman yang direncanakan.','Membuat laporan analisis peluang pasar berdasarkan survei dan observasi lapangan.'],
+  makna:'Wirausahawan sukses bisa "membaca" pasar sebelum berjualan. Dengan memahami pelanggan, kebutuhan mereka, dan kompetitor, usaha F&B bisa dirancang untuk memenangkan persaingan.',
+  pemantik:['Mengapa produk yang sama bisa sukses di satu daerah tapi gagal di daerah lain?','Siapa "target pelanggan ideal" untuk produk yang ingin kamu jual?'],
+  materi:[
+    {h:'Peluang usaha', b:`<p>Peluang usaha muncul dari <b>masalah yang belum terselesaikan</b>, <b>tren yang sedang naik</b>, atau <b>celah</b> (produk yang dicari tetapi belum tersedia di sekitarmu).</p><p>Contoh: banyak siswa tidak sempat sarapan, tetapi kantin baru buka jam istirahat. Itu peluang untuk sarapan praktis yang dijual pagi hari.</p>`},
+    {h:'Segmentasi pasar', b:`<div class="tbl-wrap"><table><thead><tr><th>Dasar</th><th>Dilihat dari</th><th>Contoh</th></tr></thead><tbody><tr><td>Demografis</td><td>Usia, jenis kelamin, pendapatan, pekerjaan</td><td>Pelajar SMK usia 16–18</td></tr><tr><td>Geografis</td><td>Lokasi</td><td>Radius 1 km dari sekolah</td></tr><tr><td>Psikografis</td><td>Gaya hidup, nilai, minat</td><td>Peduli makanan sehat</td></tr><tr><td>Behavioral</td><td>Kebiasaan dan pola beli</td><td>Membeli minuman setiap pulang sekolah</td></tr></tbody></table></div>`},
+    {h:'Kompetitor langsung dan tidak langsung', b:`<ul class="clean"><li><b>Langsung</b>: menjual produk sejenis kepada pembeli yang sama. Kedai es kopi vs. kedai es kopi lain.</li><li><b>Tidak langsung</b>: produk berbeda, tetapi memenuhi kebutuhan yang sama. Kedai es kopi vs. penjual es teh atau jus.</li></ul>`},
+    {h:'Analisis SWOT', b:`<div class="tbl-wrap"><table><thead><tr><th></th><th>Positif</th><th>Negatif</th></tr></thead><tbody><tr><td><b>Internal</b> (dari dalam usaha)</td><td>S – Strengths (kekuatan)</td><td>W – Weaknesses (kelemahan)</td></tr><tr><td><b>Eksternal</b> (dari luar usaha)</td><td>O – Opportunities (peluang)</td><td>T – Threats (ancaman)</td></tr></tbody></table></div><p>Tips: isi tiap kuadran dengan <b>data konkret</b>, bukan kata umum seperti "rasanya enak".</p>`},
+    {h:'Riset pasar dan persona', b:`<p>Data primer dikumpulkan sendiri: <b>survei Google Form</b> (minimal 8 pertanyaan, 20 responden), observasi, dan wawancara. Data sekunder diambil dari sumber lain: Google Trends, ulasan marketplace, akun media sosial kompetitor.</p><p><b>Persona</b> adalah tokoh rekaan yang mewakili pelanggan ideal: nama, usia, kebiasaan, kebutuhan. Persona yang baik dibuat dari data riset, bukan khayalan.</p>`}
+  ],
+  act:'swot', proyek:'Susun <b>Laporan Analisis Peluang Pasar</b>: (1) hasil survei 20 responden dalam grafik, (2) analisis SWOT, (3) persona pelanggan, (4) 3 peluang pasar utama, (5) kesimpulan kelayakan pasar. Sebarkan Google Form survei kepada minimal 20 responden.',
+  refQ:'Siapa persona pelanggan untuk produkmu, dan data apa yang kamu pakai untuk membuatnya?',
+  quiz:[
+    {q:'Mengelompokkan pembeli berdasarkan gaya hidup sehat termasuk segmentasi …', o:['Demografis','Geografis','Psikografis','Behavioral'], a:2, w:'Gaya hidup, nilai, dan minat termasuk psikografis.'},
+    {q:'Bagi kedai bakso, warung mie ayam di sebelahnya adalah kompetitor …', o:['Langsung','Tidak langsung','Bukan kompetitor','Pemasok'], a:1, w:'Produknya berbeda, tetapi sama-sama memenuhi kebutuhan makan siang pembeli yang sama.'},
+    {q:'Bagian SWOT yang berasal dari luar usaha (eksternal) adalah …', o:['Strengths dan Weaknesses','Strengths dan Opportunities','Weaknesses dan Threats','Opportunities dan Threats'], a:3, w:'O dan T datang dari lingkungan luar; S dan W dari dalam usaha.'},
+    {q:'"Harga susu naik sejak bulan lalu" bagi kedai kopi susu termasuk …', o:['Strength','Weakness','Opportunity','Threat'], a:3, w:'Kenaikan harga bahan baku adalah faktor luar yang merugikan: ancaman.'},
+    {q:'Persona pelanggan yang baik adalah …', o:['Tokoh terkenal yang disukai penjual','Tokoh rekaan yang dibuat dari data survei dan wawancara','Daftar semua orang yang pernah membeli','Foto pelanggan yang paling sering datang'], a:1, w:'Persona mewakili pelanggan ideal dan harus didukung data riset.'}
+  ]},
+{ id:'u4', icon:'heart', title:'Design Thinking dalam Pengembangan Produk', short:'Design Thinking', el:'Inovasi', tpc:['2.1','2.2'],
+  tp:['Menjelaskan dan menerapkan 5 tahapan design thinking dalam pengembangan produk F&B.','Membuat empathy map berdasarkan wawancara nyata dengan calon konsumen.','Menghasilkan minimal 3 konsep solusi produk dari proses ideasi design thinking.'],
+  makna:'Design thinking menempatkan kebutuhan manusia di pusat setiap keputusan bisnis. Dengan pendekatan ini, warung makan kecil pun bisa menemukan inovasi yang benar-benar dibutuhkan pelanggannya.',
+  pemantik:['Pernahkah kamu membeli makanan yang enak tapi kemasannya tidak praktis? Atau sebaliknya?','Mengapa banyak produk makanan baru gagal padahal tampak menarik?'],
+  materi:[
+    {h:'Tiga jenis inovasi', b:`<ul class="clean"><li><b>Inovasi produk</b>: produknya yang baru. Contoh: es kopi dengan susu oat.</li><li><b>Inovasi proses</b>: cara membuat atau melayani yang baru. Contoh: SOP dapur baru sehingga waktu saji turun dari 5 menjadi 3 menit.</li><li><b>Inovasi model bisnis</b>: cara mendapat uang yang baru. Contoh: paket langganan sarapan mingguan.</li></ul>`},
+    {h:'Lima tahap design thinking', b:`<div class="tbl-wrap"><table><thead><tr><th>Tahap</th><th>Yang dilakukan</th></tr></thead><tbody><tr><td>1. Empathize</td><td>Mengamati dan mewawancarai calon pembeli secara mendalam.</td></tr><tr><td>2. Define</td><td>Merumuskan masalah inti dengan empathy map dan POV statement.</td></tr><tr><td>3. Ideate</td><td>Menghasilkan banyak solusi: Crazy 8's, brainwriting, SCAMPER.</td></tr><tr><td>4. Prototype</td><td>Membuat contoh produk atau mock-up kemasan.</td></tr><tr><td>5. Test</td><td>Menguji ke pengguna, menerima masukan, lalu iterasi.</td></tr></tbody></table></div>`},
+    {h:'Empathy map', b:`<p>Enam kuadran yang diisi dari hasil wawancara:</p><ul class="clean"><li><b>Think & Feel</b>: apa yang dipikirkan dan dirasakan.</li><li><b>Hear</b>: apa yang didengar dari teman, keluarga, media.</li><li><b>See</b>: apa yang dilihat di sekitarnya.</li><li><b>Say & Do</b>: apa yang diucapkan dan dilakukan.</li><li><b>Pains</b>: hal yang membuat kesal, takut, atau rugi.</li><li><b>Gains</b>: hal yang diharapkan atau membuat senang.</li></ul>`},
+    {h:'POV statement dan Crazy 8\'s', b:`<p><b>POV statement</b> merumuskan masalah dengan pola:</p><p class="qprompt">[Pengguna] membutuhkan [kebutuhan] karena [insight].</p><p><b>Crazy 8's</b>: lipat kertas menjadi 8 kotak, buat 8 sketsa konsep produk dalam 8 menit (1 menit per konsep). Tujuannya memaksa otak keluar dari ide pertama.</p>`}
+  ],
+  act:'dt', proyek:'Lengkapi <b>Design Thinking Worksheet</b>: empathy map, POV statement, user persona, dan minimal 3 konsep ideasi produk F&B dengan sketsa kasar. Lakukan wawancara nyata di kantin sekolah atau pasar.',
+  refQ:'Apa yang berubah dari pemahamanmu tentang pelanggan setelah melakukan wawancara?',
+  quiz:[
+    {q:'Tahap pertama design thinking adalah …', o:['Ideate','Prototype','Empathize','Define'], a:2, w:'Design thinking dimulai dengan memahami pengguna (Empathize).'},
+    {q:'Dapur memakai SOP baru sehingga waktu saji turun dari 5 menjadi 3 menit. Ini contoh inovasi …', o:['Produk','Proses','Model bisnis','Kemasan'], a:1, w:'Yang berubah adalah cara membuat dan melayani: inovasi proses.'},
+    {q:'Kuadran "Pains" pada empathy map berisi …', o:['Hal yang membuat pelanggan kesal atau khawatir','Harga produk','Hal yang didengar pelanggan','Nama pelanggan'], a:0, w:'Pains = kesulitan, kekesalan, ketakutan. Gains = harapan.'},
+    {q:'Format POV statement yang benar adalah …', o:['[Produk] lebih murah dari [kompetitor]','[Pengguna] membutuhkan [kebutuhan] karena [insight]','[Penjual] ingin [omzet] dalam [waktu]','[Bahan] diganti dengan [bahan lain]'], a:1, w:'Pola ini memusatkan perhatian pada pengguna dan alasan di balik kebutuhannya.'},
+    {q:'Teknik Crazy 8\'s berarti …', o:['8 orang mencicipi produk','8 sketsa konsep dalam 8 menit','8 pertanyaan wawancara','8 langkah SOP'], a:1, w:'Satu menit per konsep, delapan konsep, untuk melatih kecepatan ideasi.'}
+  ]},
+{ id:'u5', icon:'flask', title:'Pengembangan Produk & Uji Coba Pasar', short:'Uji Produk', el:'Inovasi', tpc:['2.3','2.4'],
+  tp:['Membuat prototipe produk makanan atau minuman berdasarkan konsep yang telah dirancang.','Melakukan uji organoleptik (rasa, aroma, tekstur, tampilan) dan menganalisis hasilnya.','Melakukan iterasi produk berdasarkan feedback konsumen.'],
+  makna:'Produk tidak pernah sempurna pada versi pertamanya. Keberanian membuat, menguji, mendapat feedback, dan memperbaiki adalah siklus yang membedakan wirausahawan sukses dari yang menyerah.',
+  pemantik:['Berapa kali resep produk makanan favoritmu diubah sebelum menjadi versi yang kamu kenal sekarang?','Apa bedanya "menurut saya enak" dengan "menurut pasar enak"?'],
+  materi:[
+    {h:'MVP: Minimum Viable Product', b:`<p>MVP adalah <b>versi paling sederhana dari produk yang sudah cukup untuk diuji oleh pembeli</b>. Untuk minuman, MVP bisa berupa 20 cup dalam satu rasa dengan stiker sederhana. Tujuannya mendapat masukan secepat dan semurah mungkin.</p>`},
+    {h:'Alur pengembangan produk F&B', b:`<p>Riset resep → pilih bahan baku → standarisasi takaran → rancang kemasan → uji → perbaiki.</p><p>Standarisasi dicatat di <b>Standard Recipe Card</b>: nama produk, jumlah porsi (yield), bahan dan takaran persis (gram/ml), langkah kerja, waktu dan suhu, serta foto hasil jadi.</p>`},
+    {h:'Uji organoleptik dan blind test', b:`<p>Uji organoleptik menilai produk dengan <b>indra manusia</b>: rasa, aroma, tekstur, penampilan, ditambah kemasan. Skala modul 1–5:</p><div class="tbl-wrap"><table><tbody><tr><td class="mono">1</td><td>Sangat tidak suka</td><td class="mono">4</td><td>Suka</td></tr><tr><td class="mono">2</td><td>Tidak suka</td><td class="mono">5</td><td>Sangat suka</td></tr><tr><td class="mono">3</td><td>Biasa</td><td></td><td></td></tr></tbody></table></div><p><b>Blind test</b>: produk disajikan tanpa label atau merek, agar panelis menilai produknya, bukan namanya. Rubrik modul menilai "Sangat Baik" bila panelis 10 orang atau lebih.</p>`},
+    {h:'Feedback loop dan keamanan pangan', b:`<p>Siklus iterasi: <b>buat → uji → analisis → perbaiki → uji lagi</b>. Fokuskan perbaikan pada aspek dengan skor rata-rata terendah.</p><ul class="clean"><li><b>Kebersihan</b>: cuci tangan, alat bersih, rambut tertutup.</li><li><b>Suhu</b>: bahan mudah basi disimpan dingin.</li><li><b>FIFO</b> (First In, First Out): bahan yang masuk lebih dulu dipakai lebih dulu.</li></ul>`}
+  ],
+  act:'org', proyek:'Tiap kelompok menghasilkan: (1) prototipe produk jadi, (2) Standard Recipe Card, (3) laporan uji organoleptik dengan grafik, (4) rencana iterasi produk versi 2. Blind test dilakukan kepada minimal 10 siswa lain lewat Google Form.',
+  refQ:'Aspek mana yang skornya paling rendah, dan apa rencana perbaikanmu?',
+  quiz:[
+    {q:'Prinsip FIFO dalam penyimpanan bahan berarti …', o:['Bahan termurah dipakai lebih dulu','Bahan yang masuk lebih dulu dipakai lebih dulu','Bahan yang masuk terakhir dipakai lebih dulu','Bahan dibeli setiap hari'], a:1, w:'First In, First Out mencegah bahan lama kedaluwarsa di gudang.'},
+    {q:'Tujuan blind test adalah …', o:['Panelis menilai produk tanpa dipengaruhi merek atau label','Menguji penglihatan panelis','Menyembunyikan harga','Mempercepat produksi'], a:0, w:'Tanpa label, penilaian lebih objektif.'},
+    {q:'Hasil rata-rata uji: Rasa 4,2 · Aroma 3,9 · Tekstur 2,8 · Penampilan 4,0. Prioritas iterasi adalah …', o:['Rasa','Aroma','Tekstur','Penampilan'], a:2, w:'Tekstur memiliki skor terendah (2,8), jadi diperbaiki lebih dulu.'},
+    {q:'MVP dalam usaha makanan adalah …', o:['Produk termahal di menu','Versi paling sederhana yang sudah cukup untuk diuji pembeli','Produk yang paling laku','Menu yang dijual seumur hidup'], a:1, w:'MVP dibuat agar bisa cepat diuji dan diperbaiki.'},
+    {q:'Uji organoleptik adalah pengujian yang menggunakan …', o:['Alat laboratorium','Indra manusia','Data penjualan','Media sosial'], a:1, w:'Organoleptik = dinilai dengan indra: pengecap, penciuman, peraba, penglihatan.'}
+  ]},
+{ id:'u6', icon:'phone', title:'Branding & Digital Marketing', short:'Pemasaran', el:'Kewirausahaan', tpc:['3.4'],
+  tp:['Merancang strategi konten digital untuk produk F&B di Instagram dan TikTok.','Membuat minimal 5 konten pemasaran (foto/video/infografis) siap dipublikasikan.','Mendaftarkan dan mengelola toko produk di platform marketplace.'],
+  makna:'Di era digital, produk yang enak saja tidak cukup; ia harus "enak dilihat" di layar. UMKM yang menguasai pemasaran digital bisa menjangkau banyak calon pelanggan tanpa menyewa toko di mal.',
+  pemantik:['Mengapa foto makanan di restoran mewah lebih menggugah selera daripada foto yang sama di warteg?','Bagaimana konten TikTok singkat bisa membuat antrean panjang di depan warung yang sebelumnya sepi?'],
+  materi:[
+    {h:'Konsistensi visual', b:`<p>Pakai warna, huruf, dan gaya foto yang sama di semua konten, agar orang mengenali merekmu hanya dengan melihat sekilas. Simpan template Canva sendiri supaya setiap unggahan seragam.</p>`},
+    {h:'Instagram dan TikTok', b:`<ul class="clean"><li><b>Instagram</b>: Feed untuk etalase foto terbaik, Reels untuk video pendek yang menjangkau orang baru, Story untuk info harian (stok, promo). Hashtag dipilih yang relevan dengan produk dan lokasi.</li><li><b>TikTok</b>: video masuk FYP bila banyak ditonton sampai habis. <b>Hook 3 detik pertama</b> menentukan penonton lanjut atau scroll. Pakai audio yang sedang tren.</li></ul>`},
+    {h:'Food photography dengan smartphone', b:`<ul class="clean"><li>Cahaya alami dari samping (dekat jendela), hindari flash.</li><li>Sudut 45° untuk minuman dan burger, flat lay (dari atas) untuk makanan di piring.</li><li>Latar bersih dan sederhana; produk jadi pusat perhatian.</li><li>Edit ringan di Snapseed atau Lightroom Mobile: kecerahan, kontras, sedikit kehangatan.</li></ul>`},
+    {h:'Copywriting makanan', b:`<ul class="clean"><li><b>Hook</b>: kalimat pembuka yang membuat berhenti scroll.</li><li><b>Storytelling</b>: cerita di balik produk (bahan, proses, asal resep).</li><li><b>Emotional trigger</b>: kenangan, rasa penasaran, takut kehabisan.</li><li><b>CTA (call to action)</b>: ajakan jelas, misalnya "Pesan lewat WhatsApp sekarang".</li></ul>`},
+    {h:'WhatsApp Business dan marketplace', b:`<ul class="clean"><li><b>WhatsApp Business</b>: katalog produk dengan foto dan harga, pesan otomatis (salam dan jam buka), label pelanggan (baru, langganan, belum bayar).</li><li><b>Marketplace</b> (Tokopedia/Shopee): foto produk jelas, deskripsi memuat <b>kata kunci</b> yang dicari pembeli (SEO), dan pesanan dibalas cepat.</li></ul>`}
+  ],
+  act:'caption', proyek:'Tiap kelompok menghasilkan: (1) akun Instagram/TikTok produk dengan 5 konten, (2) WhatsApp Business dengan katalog, (3) toko marketplace dengan 3 listing, (4) laporan insight media sosial setelah 1 minggu.',
+  refQ:'Konten mana yang menurutmu paling kuat, dan bagaimana kamu akan mengukur hasilnya selama 1 minggu?',
+  quiz:[
+    {q:'Dalam video TikTok, "hook 3 detik pertama" penting karena …', o:['Menentukan apakah penonton lanjut menonton atau scroll','Menentukan harga produk','Wajib berisi logo','Diperlukan untuk mendaftar akun'], a:0, w:'Video yang ditonton sampai habis lebih mungkin masuk FYP.'},
+    {q:'Contoh CTA yang jelas adalah …', o:['Kopi kami enak sekali','Pesan sekarang lewat WhatsApp, stok 30 cup per hari!','#kopi #enak #mantap','Terima kasih sudah membaca'], a:1, w:'CTA mengajak melakukan tindakan tertentu, ditambah alasan untuk segera bertindak.'},
+    {q:'Pencahayaan yang dianjurkan untuk foto produk makanan dengan smartphone adalah …', o:['Flash kamera','Lampu kamar dari atas','Cahaya alami dari samping, dekat jendela','Ruangan gelap agar dramatis'], a:2, w:'Cahaya samping yang lembut memunculkan tekstur dan warna asli makanan.'},
+    {q:'Deskripsi produk di marketplace sebaiknya …', o:['Sesingkat mungkin, cukup nama','Memuat kata kunci yang biasa dicari pembeli','Ditulis dalam huruf kapital semua','Tidak mencantumkan berat atau isi'], a:1, w:'Kata kunci (SEO) membantu produk muncul di hasil pencarian marketplace.'},
+    {q:'Fitur katalog pada WhatsApp Business berguna untuk …', o:['Menampilkan daftar produk beserta foto dan harga','Mengedit video','Membuat logo','Menghitung pajak'], a:0, w:'Pembeli bisa melihat produk dan harga tanpa bertanya satu per satu.'}
+  ]}
+];
+
+const EVAL = [
+  {q:'Raka membuka usaha es teh di depan sekolah. Minggu pertama sepi. Tindakan yang paling mencerminkan growth mindset dan berbasis data adalah …', o:['Menutup usaha karena merasa tidak berbakat','Bertanya kepada 10 calon pembeli alasan mereka belum membeli, lalu memperbaiki produk','Menurunkan harga sampai di bawah biaya','Menyalahkan lokasi'], a:1},
+  {q:'Sinta punya 15 ide produk dari sesi SCAMPER. Cara memilih 1 ide sesuai modul adalah …', o:['Memilih ide yang paling disukai sendiri','Mengundi ide','Menilai setiap ide pada matriks kelayakan dan keunikan','Memilih ide yang paling murah'], a:2},
+  {q:'Dari wawancara, kelompokmu menemukan banyak siswa tidak sempat sarapan karena berangkat sangat pagi. POV statement yang tepat adalah …', o:['Kami ingin menjual roti dengan untung 50%','Siswa yang berangkat pagi membutuhkan sarapan yang bisa dimakan sambil jalan karena tidak sempat makan di rumah','Roti lebih enak daripada nasi','Kantin harus buka lebih pagi'], a:1},
+  {q:'Hasil uji organoleptik: Rasa 4,1 · Aroma 4,0 · Tekstur 2,5 · Penampilan 3,8 · Kemasan 3,9. Langkah berikutnya yang tepat adalah …', o:['Langsung produksi massal','Memperbaiki resep dengan fokus pada tekstur, lalu menguji ulang','Mengganti seluruh produk','Menaikkan harga'], a:1},
+  {q:'Susu dibeli hari Senin dan Rabu. Pada hari Kamis, susu yang dipakai lebih dulu adalah …', o:['Susu hari Rabu karena lebih segar','Susu hari Senin, sesuai prinsip FIFO','Yang paling mudah diambil','Dicampur keduanya'], a:1},
+  {q:'"Resep sambal turun-temurun dari nenek yang tidak dimiliki penjual lain" dalam SWOT termasuk …', o:['Strength','Weakness','Opportunity','Threat'], a:0},
+  {q:'Usaha kue basah memutuskan membidik pembeli di radius 1 km dari sekolah. Dasar segmentasi yang dipakai adalah …', o:['Demografis','Geografis','Psikografis','Behavioral'], a:1},
+  {q:'Caption Instagram yang paling efektif untuk menjual adalah …', o:['Kopi','Kopi susu gula aren kami enak','Ngantuk di jam ke-7? Kopi susu gula aren dari aren asli, siap antar ke kelas. Pesan via WA sebelum jam 10!','#kopi #kopisusu #enak #murah #mantap #viral'], a:2},
+  {q:'Video TikTok produkmu ditonton banyak orang, tetapi kebanyakan berhenti menonton di detik ke-2. Bagian yang paling perlu diperbaiki adalah …', o:['Hashtag','Hook di awal video','Logo di akhir video','Nama akun'], a:1},
+  {q:'Untuk menguji ide minuman baru dengan modal kecil, langkah paling tepat adalah …', o:['Membuat MVP 20 cup lalu meminta penilaian pembeli','Mencetak 1.000 kemasan bermerek dulu','Menyewa kios selama setahun','Menunggu sampai resep sempurna'], a:0}
+];
+
+/* ===== keadaan ===== */
+const KEY = 'dapurIde.v1';
+const blank = () => ({nama:'', kelas:'', quiz:{}, visit:{}, refl:{}, pem:{}, evalScore:null});
+let S = blank();
+try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(blank(), JSON.parse(raw)); } catch(e) {}
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} refreshTop(); }
+
+const main = document.getElementById('main');
+function toast(t){ const el=document.createElement('div'); el.className='toast'; el.textContent=t; document.body.appendChild(el); setTimeout(()=>el.remove(),2200); }
+function quizDone(){ return UNITS.filter(u => S.quiz[u.id] != null); }
+function avgUnits(){ const d=quizDone(); return d.length ? Math.round(d.reduce((a,u)=>a+S.quiz[u.id],0)/d.length) : null; }
+function refreshTop(){
+  document.getElementById('whoName').textContent = S.nama ? `${S.nama}${S.kelas ? ' · '+S.kelas : ''}` : '';
+  const d = quizDone().length, avg = avgUnits();
+  document.getElementById('whoScore').textContent = avg==null ? `0 / 6 kuis` : `${d}/6 kuis · ${avg}`;
+}
+function go(fn){ fn(); window.scrollTo({top:0, behavior:'auto'}); refreshTop(); }
+
+/* ===== layar: sampul ===== */
+const coverArt = `<svg class="cover-art" viewBox="0 0 360 300" role="img" aria-label="Topologi: enam unit KIK terhubung ke satu switch">
+  <g fill="none" stroke-width="3.5" stroke-linecap="round">
+    <path d="M60 60L150 135" stroke="var(--c-o)" stroke-dasharray="9 6"/>
+    <path d="M180 40V130" stroke="var(--c-o)"/>
+    <path d="M300 60L210 135" stroke="var(--c-g)" stroke-dasharray="9 6"/>
+    <path d="M300 240L210 165" stroke="var(--c-b)"/>
+    <path d="M180 260V170" stroke="var(--c-b)" stroke-dasharray="9 6"/>
+    <path d="M60 240L150 165" stroke="var(--c-g)"/>
+  </g>
+  <rect class="sw" x="124" y="128" width="112" height="44" rx="4"/>
+  <text class="ts" x="136" y="155">KIK-SW</text>
+  <circle cx="200" cy="150" r="3.5" fill="var(--term-acc)"/><circle cx="211" cy="150" r="3.5" fill="var(--term-acc)"/><circle cx="222" cy="150" r="3.5" fill="var(--amb)"/>
+  <rect class="node" x="32" y="44" width="56" height="32" rx="4"/><text class="t" x="60" y="65" text-anchor="middle">U1</text>
+  <rect class="node" x="152" y="24" width="56" height="32" rx="4"/><text class="t" x="180" y="45" text-anchor="middle">U2</text>
+  <rect class="node" x="272" y="44" width="56" height="32" rx="4"/><text class="t" x="300" y="65" text-anchor="middle">U3</text>
+  <rect class="node" x="272" y="224" width="56" height="32" rx="4"/><text class="t" x="300" y="245" text-anchor="middle">U4</text>
+  <rect class="node" x="152" y="244" width="56" height="32" rx="4"/><text class="t" x="180" y="265" text-anchor="middle">U5</text>
+  <rect class="node" x="32" y="224" width="56" height="32" rx="4"/><text class="t" x="60" y="245" text-anchor="middle">U6</text>
+  <text class="cap" x="60" y="92" text-anchor="middle">mindset</text>
+  <text class="cap" x="216" y="44">ide</text>
+  <text class="cap" x="300" y="92" text-anchor="middle">pasar</text>
+  <text class="cap" x="300" y="272" text-anchor="middle">design thinking</text>
+  <text class="cap" x="216" y="264">uji produk</text>
+  <text class="cap" x="60" y="272" text-anchor="middle">pemasaran</text>
+</svg>`;
+function viewCover(){
+  main.innerHTML = `<section class="screen">
+    <div class="cover">
+      <div class="stack">
+        <p class="eyebrow">MPI · Kreativitas, Inovasi, dan Kewirausahaan</p>
+        <h1>Lab Wirausaha KIK</h1>
+        <p class="lead">Dari ide di kepala sampai produk makanan dan minuman yang siap dijual. Enam unit untuk Kelas XI, dengan aktivitas, kuis, dan refleksi di setiap langkah.</p>
+        <div class="meta-line"><span class="chip">Fase F · Kelas XI TJKT</span><span class="chip">Unit 1–6</span><span class="chip">Konteks UMKM F&amp;B</span></div>
+      </div>
+      ${coverArt}
+    </div>
+    <form class="panel stack" id="startForm" novalidate>
+      <h3>Login peserta</h3>
+      <div class="row">
+        <div class="field"><label for="inNama">Nama lengkap</label><input type="text" id="inNama" autocomplete="name" value="${esc(S.nama)}" placeholder="Contoh: Dinda Pratiwi"></div>
+        <div class="field"><label for="inKelas">Kelas</label><input type="text" id="inKelas" value="${esc(S.kelas)}" placeholder="Contoh: XI TJKT 2"></div>
+      </div>
+      <p class="fb no" id="startErr" hidden>Isi nama terlebih dahulu agar nama muncul di rapor.</p>
+      <div class="row"><button class="btn" type="submit">Mulai</button>${S.nama ? '<span class="muted">Kemajuanmu tersimpan di perangkat ini.</span>' : ''}</div>
+    </form>
+  </section>`;
+  document.getElementById('startForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const n = document.getElementById('inNama').value.trim();
+    if (!n){ document.getElementById('startErr').hidden=false; return; }
+    S.nama = n; S.kelas = document.getElementById('inKelas').value.trim(); save();
+    go(viewGuide);
+  });
+}
+
+/* ===== layar: petunjuk ===== */
+function viewGuide(){
+  const items = [
+    ['open','Pilih unit','Buka Peta Belajar, lalu pilih unit sesuai pertemuan di kelas. Unit boleh dikerjakan tidak berurutan.'],
+    ['hand','Ikuti 5 langkah','Setiap unit berisi Pembuka, Materi, Aktivitas, Kuis, dan Refleksi. Tekan tombol di bawah layar untuk lanjut.'],
+    ['check','Kerjakan kuis','5 soal per unit dengan pembahasan. Nilai tersimpan otomatis dan bisa diulang.'],
+    ['pen','Tulis refleksi','Jawab pertanyaan refleksi dan catat tugas proyek dari guru. Setelah 4 kuis, Evaluasi Akhir terbuka.']
+  ];
+  main.innerHTML = `<section class="screen">
+    <div class="stack"><p class="eyebrow">Petunjuk</p><h2>Cara memakai Lab Wirausaha</h2></div>
+    <div class="guide-grid">${items.map(([ic,h,t])=>`<div class="panel guide-item">${ICON[ic]}<h3>${h}</h3><p class="muted">${t}</p></div>`).join('')}</div>
+    ${say(`Halo, ${esc(S.nama)}. Semua yang kamu kerjakan tersimpan di HP atau laptop ini. Kalau pindah perangkat, kemajuan mulai dari awal lagi.`)}
+    <div class="row"><button class="btn" id="toMap" type="button">Buka Peta Belajar</button></div>
+  </section>`;
+  document.getElementById('toMap').onclick = () => go(viewMap);
+}
+
+/* ===== layar: peta belajar ===== */
+function viewMap(){
+  const d = quizDone().length, unlocked = d >= 4;
+  main.innerHTML = `<section class="screen">
+    <div class="stack"><p class="eyebrow">Peta Belajar</p><h2>Halo, ${esc(S.nama.split(' ')[0] || 'Peserta')}. Unit mana hari ini?</h2><p class="muted mono" style="font-size:.8rem">Warna garis tiap unit mengikuti urutan pin 1–6 kabel UTP standar T568B.</p></div>
+    <div class="map-grid">${UNITS.map((u,i)=>{
+      const v = (S.visit[u.id]||[]).length, sc = S.quiz[u.id];
+      const pn = PINS[i];
+      return `<button class="unit-card" type="button" data-u="${i}">
+        <span class="pin" style="--pc:var(--c-${pn[0]})" data-w="${pn[1]}" aria-hidden="true"></span>
+        <div class="top"><span class="ico">${ICON[u.icon]}</span><span class="num">UNIT ${i+1} · ${u.el}<br>PIN ${i+1} ${pn[2]}</span></div>
+        <h3>${u.title}</h3>
+        <div class="tp">${u.tpc.map(t=>`<span>TP ${t}</span>`).join('')}</div>
+        <div class="bar" aria-label="Kemajuan ${v} dari 5 langkah"><i style="width:${v/5*100}%"></i></div>
+        <span class="muted" style="font-size:.85rem">${v}/5 langkah · ${sc==null ? 'kuis belum' : 'kuis <b class="mono">'+sc+'</b>'}</span>
+      </button>`;}).join('')}</div>
+    <div class="eval-card">
+      <div class="stack" style="gap:4px;min-width:0"><h3>Evaluasi Akhir & Rapor</h3><p class="muted">${unlocked ? '10 soal studi kasus lintas unit. Hasilnya menjadi rapor dengan predikat A–D.' : `Terbuka setelah 4 kuis unit selesai. Sekarang: ${d}/4.`}</p></div>
+      <div class="row"><button class="btn" id="toEval" type="button" ${unlocked?'':'disabled'}>Mulai evaluasi</button><button class="btn ghost" id="toRapor" type="button">Lihat rapor</button></div>
+    </div>
+    <div class="row"><button class="btn ghost small" id="toAbout" type="button">Tentang MPI ini</button><button class="btn ghost small" id="toGuide" type="button">Petunjuk</button></div>
+  </section>`;
+  main.querySelectorAll('[data-u]').forEach(b => b.onclick = () => go(()=>viewUnit(+b.dataset.u, 0)));
+  document.getElementById('toEval').onclick = () => go(viewEval);
+  document.getElementById('toRapor').onclick = () => go(viewRapor);
+  document.getElementById('toAbout').onclick = () => go(viewAbout);
+  document.getElementById('toGuide').onclick = () => go(viewGuide);
+}
+
+/* ===== layar: unit ===== */
+const PINS = [['o',1,'putih-oranye'],['o',0,'oranye'],['g',1,'putih-hijau'],['b',0,'biru'],['b',1,'putih-biru'],['g',0,'hijau']];
+const STEPS = ['Pembuka','Materi','Aktivitas','Kuis','Refleksi'];
+function viewUnit(i, step){
+  const u = UNITS[i];
+  const v = new Set(S.visit[u.id]||[]); v.add(step); S.visit[u.id] = [...v]; save();
+  main.innerHTML = `<section class="screen">
+    <div class="unit-head"><span class="ico">${ICON[u.icon]}</span><div><p class="eyebrow">Unit ${i+1} · ${u.el} · TP ${u.tpc.join(', ')}</p><h2>${u.title}</h2></div></div>
+    <nav class="steps" aria-label="Langkah unit">${STEPS.map((s,k)=>`<button type="button" class="step ${k===step?'on':''} ${v.has(k)?'done':''}" data-s="${k}" ${k===step?'aria-current="step"':''}><small>${String.fromCharCode(65+k)}</small><span>${s}</span></button>`).join('')}</nav>
+    <div class="panel stack" id="stepBody"></div>
+    <div class="nav-foot">
+      <button class="btn ghost" type="button" id="prevS">${step===0?'Peta Belajar':'Sebelumnya'}</button>
+      <button class="btn" type="button" id="nextS">${step===4?'Selesai, ke Peta Belajar':'Lanjut: '+STEPS[step+1]}</button>
+    </div>
+  </section>`;
+  main.querySelectorAll('[data-s]').forEach(b => b.onclick = () => go(()=>viewUnit(i, +b.dataset.s)));
+  document.getElementById('prevS').onclick = () => go(step===0 ? viewMap : ()=>viewUnit(i, step-1));
+  document.getElementById('nextS').onclick = () => go(step===4 ? viewMap : ()=>viewUnit(i, step+1));
+  const body = document.getElementById('stepBody');
+  [stepOpen, stepMateri, stepAct, stepQuiz, stepRefl][step](u, i, body);
+}
+
+function stepOpen(u, i, el){
+  el.innerHTML = `<h3>Tujuan pembelajaran</h3><ul class="clean">${u.tp.map(t=>`<li>${t}</li>`).join('')}</ul>
+    <h3>Pemahaman bermakna</h3><p>${u.makna}</p>
+    <h3>Pertanyaan pemantik</h3>
+    ${u.pemantik.map((p,k)=>`<div class="stack" style="gap:8px"><p class="qprompt">${p}</p><label class="muted" for="pem${k}" style="font-size:.85rem">Jawaban singkatmu</label><textarea id="pem${k}" data-k="${k}" placeholder="Tulis pendapatmu dalam 1–3 kalimat">${esc((S.pem[u.id]||[])[k])}</textarea></div>`).join('')}
+    ${say('Tidak ada jawaban salah di pemantik. Tulis apa yang kamu pikirkan sekarang, nanti bandingkan setelah belajar.')}`;
+  el.querySelectorAll('textarea').forEach(t => t.oninput = () => { const a = S.pem[u.id] || []; a[+t.dataset.k] = t.value; S.pem[u.id] = a; save(); });
+}
+
+function stepMateri(u, i, el){
+  el.innerHTML = `<p class="muted">Buka kartu satu per satu. Materi diringkas dari modul ajar.</p>
+    ${u.materi.map((m,k)=>`<details class="card" ${k===0?'open':''}><summary>${m.h}</summary><div class="body">${m.b}</div></details>`).join('')}`;
+}
+
+function stepAct(u, i, el){ ACT[u.act](el); }
+
+function stepQuiz(u, i, el){
+  const prev = S.quiz[u.id];
+  el.innerHTML = `<div class="row between"><h3>Kuis Unit ${i+1}</h3>${prev!=null?`<span class="chip score">Nilai terakhir: ${prev}</span>`:''}</div><div id="qz"></div>`;
+  quizBlock(document.getElementById('qz'), u.quiz, score => { S.quiz[u.id] = score; save(); });
+}
+
+function stepRefl(u, i, el){
+  el.innerHTML = `<h3>Tugas proyek dari modul</h3><p>${u.proyek}</p>
+    <h3>Refleksi</h3><p class="qprompt">${u.refQ}</p>
+    <label class="muted" for="refl" style="font-size:.85rem">Jawabanmu</label>
+    <textarea id="refl" placeholder="Tulis refleksimu">${esc(S.refl[u.id])}</textarea>
+    ${say(S.quiz[u.id]==null ? 'Kuis unit ini belum dikerjakan. Kembali ke langkah D sebelum lanjut ke unit lain, ya.' : `Nilai kuismu ${S.quiz[u.id]}. ${S.quiz[u.id] >= 80 ? 'Lulus. Lanjut ke unit berikutnya.' : 'Coba baca lagi kartu materi, lalu ulangi kuisnya.'}`)}`;
+  document.getElementById('refl').oninput = e => { S.refl[u.id] = e.target.value; save(); };
+}
+
+/* ===== komponen kuis ===== */
+function quizBlock(box, Q, onDone){
+  const ans = Q.map(()=>null);
+  box.innerHTML = `<div class="quiz">${Q.map((q,k)=>`<div class="q" data-q="${k}">
+      <span class="qn">SOAL ${k+1} / ${Q.length}</span><p class="qt">${q.q}</p>
+      <div class="opts">${q.o.map((o,j)=>`<button type="button" class="opt" data-o="${j}"><span class="k">${'ABCD'[j]}</span><span>${o}</span></button>`).join('')}</div>
+      <p class="why" hidden></p></div>`).join('')}
+    <div id="qres"></div></div>`;
+  box.querySelectorAll('.q').forEach(qe => {
+    const k = +qe.dataset.q;
+    qe.querySelectorAll('.opt').forEach(b => b.onclick = () => {
+      if (ans[k] != null) return;
+      const j = +b.dataset.o; ans[k] = j;
+      qe.querySelectorAll('.opt').forEach(x => { x.disabled = true; const o=+x.dataset.o; if (o===Q[k].a) x.classList.add('right'); else if (o===j) x.classList.add('wrong'); });
+      const w = qe.querySelector('.why'); w.hidden = false;
+      w.innerHTML = `<b class="${j===Q[k].a?'fb ok':'fb no'}">${j===Q[k].a?'Benar.':'Belum tepat.'}</b> ${Q[k].w}`;
+      if (ans.every(a=>a!=null)){
+        const right = ans.filter((a,x)=>a===Q[x].a).length, score = Math.round(right/Q.length*100);
+        onDone(score);
+        const r = box.querySelector('#qres');
+        r.innerHTML = `<div class="struk"><p class="c">LOG · HASIL KUIS</p><hr><div class="ln"><span>Benar</span><span>${right} / ${Q.length}</span></div><div class="ln"><span>Nilai</span><span class="big">${score}</span></div><hr><p class="c">${score>=80?'STATUS: LULUS KKTP':'STATUS: ULANGI SETELAH BACA MATERI'}</p></div><div class="row" style="justify-content:center;margin-top:12px"><button class="btn ghost small" type="button" id="qAgain">Ulangi kuis</button></div>`;
+        r.querySelector('#qAgain').onclick = () => quizBlock(box, Q, onDone);
+        r.scrollIntoView({behavior:'smooth', block:'center'});
+      }
+    });
+  });
+}
+
+/* ===== aktivitas ===== */
+const ACT = {};
+
+ACT.mindset = el => {
+  const items = [
+    ['Resep gagal? Aku catat apa yang salah, lalu coba lagi besok.','G'],
+    ['Aku memang tidak berbakat jualan.','F'],
+    ['Kritik pembeli itu bahan untuk memperbaiki menu.','G'],
+    ['Kalau warung sebelah lebih ramai, ya sudah, nasib.','F'],
+    ['Aku belajar foto produk dari tutorial, walau hasil awalnya jelek.','G'],
+    ['Lebih aman jual menu yang itu-itu saja, jangan coba varian baru.','F'],
+    ['Usaha teman sukses? Aku pelajari caranya.','G'],
+    ['Kalau sekali rugi, berarti bisnis bukan untukku.','F']
+  ];
+  const traits = ['Percaya diri','Berani ambil risiko','Inovatif','Tekun','Berorientasi nilai'];
+  const tips = {
+    'Percaya diri':'Latih elevator pitch 30 detik tentang produk impianmu di depan 3 teman.',
+    'Berani ambil risiko':'Coba satu hal baru kecil minggu ini, misalnya menawarkan produk ke kelas lain.',
+    'Inovatif':'Pakai SCAMPER pada satu jajanan favoritmu dan tulis 5 ide barunya.',
+    'Tekun':'Buat target harian kecil (misalnya 1 konten per hari) dan catat 7 hari berturut-turut.',
+    'Berorientasi nilai':'Tulis 3 janji yang akan selalu kamu tepati kepada pembeli.'
+  };
+  let val = [3,3,3,3,3]; let done = 0, right = 0;
+  el.innerHTML = `<div class="act-title"><h3>Pilah Mindset</h3><span class="muted">Pilih Fixed atau Growth untuk tiap pernyataan.</span></div>
+    <div class="sort-list">${items.map(([t],k)=>`<div class="sort-item" data-k="${k}"><p>"${t}"</p><div class="opt-row"><button class="pill" type="button" data-v="F">Fixed</button><button class="pill" type="button" data-v="G">Growth</button></div></div>`).join('')}</div>
+    <p class="fb" id="msScore" aria-live="polite"></p>
+    <hr style="border:0;border-top:1px solid var(--line);width:100%">
+    <div class="act-title"><h3>Roda Mindset</h3><span class="muted">Nilai dirimu dengan jujur, 1 (belum) sampai 5 (sangat).</span></div>
+    <div class="two"><div class="stack">${traits.map((t,k)=>`<div class="slider-row"><label for="tr${k}">${t}</label><span class="mono" id="trv${k}">3</span><input type="range" id="tr${k}" min="1" max="5" step="1" value="3" data-k="${k}"></div>`).join('')}</div>
+    <div class="stack"><svg viewBox="0 0 260 250" id="radar" role="img" aria-label="Grafik radar karakter wirausaha"></svg><div id="radarTip"></div></div></div>`;
+  el.querySelectorAll('.sort-item').forEach(row => {
+    const k = +row.dataset.k;
+    row.querySelectorAll('.pill').forEach(b => b.onclick = () => {
+      if (row.dataset.ans) return;
+      row.dataset.ans = b.dataset.v; done++;
+      const ok = b.dataset.v === items[k][1]; if (ok) right++;
+      row.classList.add(ok?'ok':'no'); b.classList.add('sel');
+      row.querySelectorAll('.pill').forEach(x=>x.disabled=true);
+      if (!ok){ const s=document.createElement('span'); s.className='fb no'; s.textContent = 'Jawaban: '+(items[k][1]==='G'?'Growth':'Fixed'); row.appendChild(s); }
+      el.querySelector('#msScore').innerHTML = done < items.length ? `${done}/${items.length} dipilah` : `<span class="fb ${right>=6?'ok':'no'}">${right} dari ${items.length} tepat.</span> ${right>=6?'Kamu sudah bisa membedakan kedua mindset.':'Baca lagi kartu "Fixed vs. growth mindset" di Materi.'}`;
+    });
+  });
+  const draw = () => {
+    const cx=130, cy=118, R=82, ang=k=>(-90+k*72)*Math.PI/180, pt=(k,r)=>[cx+r*Math.cos(ang(k)), cy+r*Math.sin(ang(k))];
+    let s='';
+    for (let g=1; g<=5; g++) s += `<polygon class="grid" points="${[0,1,2,3,4].map(k=>pt(k,R*g/5).join(',')).join(' ')}"/>`;
+    for (let k=0;k<5;k++){ const [x,y]=pt(k,R); s+=`<line class="grid" x1="${cx}" y1="${cy}" x2="${x}" y2="${y}"/>`; const [lx,ly]=pt(k,R+16); s+=`<text class="axis-t" x="${lx}" y="${ly+4}" text-anchor="${Math.abs(lx-cx)<8?'middle':(lx>cx?'start':'end')}">${traits[k]}</text>`; }
+    s += `<polygon class="poly" points="${val.map((v,k)=>pt(k,R*v/5).join(',')).join(' ')}"/>`;
+    val.forEach((v,k)=>{ const [x,y]=pt(k,R*v/5); s+=`<circle class="dot" cx="${x}" cy="${y}" r="4"/>`; });
+    el.querySelector('#radar').innerHTML = s;
+    const min = Math.min(...val), low = traits.filter((t,k)=>val[k]===min);
+    el.querySelector('#radarTip').innerHTML = say(`Karakter yang paling perlu dikembangkan: <b>${low.join(', ')}</b>. ${tips[low[0]]}`);
+  };
+  el.querySelectorAll('input[type=range]').forEach(r => r.oninput = () => { val[+r.dataset.k] = +r.value; el.querySelector('#trv'+r.dataset.k).textContent = r.value; draw(); });
+  draw();
+};
+
+ACT.scamper = el => {
+  const P = {
+    'Es teh manis':['Ganti gula pasir dengan gula aren','Gabung teh, susu, dan jeli menjadi teh susu jeli','Tiru teh tarik ala warung mamak, sesuaikan dengan rasa lokal','Kemas ukuran 1 liter untuk keluarga','Bekukan menjadi es lilin teh untuk jajanan anak','Hilangkan gula: tawarkan versi tanpa gula','Pembeli meracik sendiri level manisnya'],
+    'Pisang goreng':['Ganti tepung terigu dengan tepung beras agar lebih renyah','Gabung dengan topping keju dan cokelat lumer','Tiru gaya churros: stik pisang dengan saus cocol','Potong kecil-kecil dan jual dalam cup','Jadikan isian roti atau bolen','Kurangi minyak: versi air fryer','Jual beku (frozen) untuk digoreng sendiri di rumah'],
+    'Kopi susu':['Ganti susu sapi dengan susu oat','Gabung kopi, gula aren, dan pandan','Tiru es kopi Vietnam dengan susu kental manis','Kemas dalam botol 1 liter untuk dibagi','Olah menjadi es krim kopi','Hilangkan es: kopi susu panas dalam sachet','Langganan mingguan, diantar ke kelas']
+  };
+  const L = [['S','Substitute','Bahan apa yang bisa diganti?'],['C','Combine','Apa yang bisa digabungkan?'],['A','Adapt','Ide dari tempat lain apa yang bisa ditiru?'],['M','Modify','Ukuran, bentuk, atau rasa apa yang bisa diubah?'],['P','Put to other use','Bisa dipakai untuk apa lagi?'],['E','Eliminate','Apa yang bisa dihilangkan?'],['R','Reverse','Bagaimana jika caranya dibalik?']];
+  let prod = 'Es teh manis';
+  let ideas = [
+    {t:'Teh susu jeli gula aren (contoh)', l:4, u:3},
+    {t:'Es lilin teh untuk anak SD (contoh)', l:5, u:2},
+    {t:'Kopi susu pandan langganan ke kelas (contoh)', l:3, u:5}
+  ];
+  el.innerHTML = `<div class="act-title"><h3>Mesin SCAMPER</h3><span class="muted">Pilih produk dasar, baca pancingan tiap huruf, lalu tulis idemu sendiri.</span></div>
+    <div class="opt-row" id="prodRow">${Object.keys(P).map(p=>`<button class="pill ${p===prod?'sel':''}" type="button" data-p="${p}">${p}</button>`).join('')}</div>
+    <div class="scamper" id="scGrid"></div>
+    <hr style="border:0;border-top:1px solid var(--line);width:100%">
+    <div class="act-title"><h3>Matriks Ide</h3><span class="muted">Target modul: minimal 10 ide. Nilai tiap ide 1–5.</span></div>
+    <form class="row" id="ideaForm"><div class="field" style="flex:1 1 280px"><label for="ideaIn">Ide baru</label><input type="text" id="ideaIn" maxlength="80" placeholder="Contoh: es teh rasa leci dalam botol"></div><button class="btn" type="submit" style="align-self:flex-end">Tambah</button></form>
+    <div class="two"><div class="stack"><p class="muted" id="ideaCount"></p><div class="idea-list" id="ideaList"></div></div>
+    <div class="stack"><svg viewBox="0 0 320 300" id="mx" role="img" aria-label="Matriks kelayakan dan keunikan ide"></svg><div id="mxTip"></div></div></div>`;
+  const drawGrid = () => {
+    el.querySelector('#scGrid').innerHTML = L.map(([l,n,q],k)=>`<div class="sc"><span class="L">${l}</span><b>${n}</b><span class="muted" style="font-size:.9rem">${q}</span><button class="btn ghost small" type="button" data-ex="${k}">Lihat contoh</button><p class="ex" hidden>${P[prod][k]}</p></div>`).join('');
+    el.querySelectorAll('[data-ex]').forEach(b => b.onclick = () => { const p=b.nextElementSibling; p.hidden=!p.hidden; b.textContent = p.hidden?'Lihat contoh':'Sembunyikan'; });
+  };
+  el.querySelectorAll('[data-p]').forEach(b => b.onclick = () => { prod=b.dataset.p; el.querySelectorAll('[data-p]').forEach(x=>x.classList.toggle('sel', x===b)); drawGrid(); });
+  const opts = v => [1,2,3,4,5].map(n=>`<option ${n===v?'selected':''}>${n}</option>`).join('');
+  const drawIdeas = () => {
+    el.querySelector('#ideaCount').textContent = `${ideas.length} ide · ${Math.max(0,10-ideas.length)} lagi menuju target 10`;
+    el.querySelector('#ideaList').innerHTML = `<div class="idea muted" style="font-size:.78rem;border:0"><span>#</span><span>Ide</span><span>Layak</span><span>Unik</span><span></span></div>` + ideas.map((d,k)=>`<div class="idea"><span class="n">${k+1}</span><span class="t">${esc(d.t)}</span><select aria-label="Kelayakan ide ${k+1}" data-k="${k}" data-f="l">${opts(d.l)}</select><select aria-label="Keunikan ide ${k+1}" data-k="${k}" data-f="u">${opts(d.u)}</select><button class="x" type="button" data-del="${k}" aria-label="Hapus ide ${k+1}">×</button></div>`).join('');
+    el.querySelectorAll('#ideaList select').forEach(s => s.onchange = () => { ideas[+s.dataset.k][s.dataset.f] = +s.value; drawMx(); });
+    el.querySelectorAll('[data-del]').forEach(b => b.onclick = () => { ideas.splice(+b.dataset.del,1); drawIdeas(); });
+    drawMx();
+  };
+  const drawMx = () => {
+    const X = v => 50 + (v-1)*60, Y = v => 250 - (v-1)*55;
+    let s = `<rect class="zone" x="170" y="20" width="140" height="120" rx="6"/><text class="axis-t" x="300" y="36" text-anchor="end">Prioritas</text>`;
+    s += `<line class="grid" x1="40" y1="260" x2="310" y2="260"/><line class="grid" x1="40" y1="260" x2="40" y2="15"/><line class="grid" x1="170" y1="15" x2="170" y2="260" stroke-dasharray="3 3"/><line class="grid" x1="40" y1="140" x2="310" y2="140" stroke-dasharray="3 3"/>`;
+    [1,2,3,4,5].forEach(v=>{ s+=`<text class="axis-t" x="${X(v)}" y="276" text-anchor="middle">${v}</text><text class="axis-t" x="30" y="${Y(v)+4}" text-anchor="end">${v}</text>`; });
+    s += `<text class="axis-t" x="175" y="294" text-anchor="middle">Kelayakan →</text><text class="axis-t" x="12" y="140" transform="rotate(-90 12 140)" text-anchor="middle">Keunikan →</text>`;
+    const best = ideas.length ? ideas.reduce((b,d,k)=> (d.l+d.u > ideas[b].l+ideas[b].u ? k : b), 0) : -1;
+    const seen = {};
+    ideas.forEach((d,k)=>{ const key=d.l+'-'+d.u; const n=seen[key]=(seen[key]||0)+1; const ox=(n-1)*9, oy=(n-1)*-9; s+=`<circle class="${k===best?'dot-best':'dot'}" cx="${X(d.l)+ox}" cy="${Y(d.u)+oy}" r="10"/><text class="dot-t" x="${X(d.l)+ox}" y="${Y(d.u)+oy+4}" text-anchor="middle">${k+1}</text>`; });
+    el.querySelector('#mx').innerHTML = s;
+    el.querySelector('#mxTip').innerHTML = best<0 ? '' : say(`Ide terkuat sementara: <b>#${best+1} ${esc(ideas[best].t)}</b>. Pastikan ide pilihanmu didukung data tren, bukan hanya selera sendiri.`);
+  };
+  el.querySelector('#ideaForm').addEventListener('submit', e => { e.preventDefault(); const inp=el.querySelector('#ideaIn'); const t=inp.value.trim(); if(!t) return; ideas.push({t, l:3, u:3}); inp.value=''; drawIdeas(); });
+  drawGrid(); drawIdeas();
+};
+
+ACT.swot = el => {
+  const F = [
+    ['Harga Rp8.000 per cup, lebih murah dari kafe di kota','S'],
+    ['Resep gula aren buatan sendiri, rasanya khas','S'],
+    ['Hanya buka saat jam sekolah','W'],
+    ['Belum punya akun media sosial','W'],
+    ['Sekitar 900 siswa dan guru lewat di depan gerobak setiap hari','O'],
+    ['Video kopi susu gula aren masih sering muncul di FYP','O'],
+    ['Minimarket di seberang mulai menjual kopi botol','T'],
+    ['Harga susu naik sejak bulan lalu','T']
+  ];
+  const N = {S:'Strengths',W:'Weaknesses',O:'Opportunities',T:'Threats'};
+  const board = {S:[],W:[],O:[],T:[]}; let right=0, done=0;
+  el.innerHTML = `<div class="act-title"><h3>Sortir SWOT</h3><span class="muted">Kasus: <b>Kedai Es Kopi Bu Rina</b>, gerobak di depan sekolah.</span></div>
+    <div class="sort-list">${F.map(([t],k)=>`<div class="sort-item" data-k="${k}"><p>${t}</p><div class="opt-row">${'SWOT'.split('').map(c=>`<button class="pill" type="button" data-v="${c}" aria-label="${N[c]}">${c}</button>`).join('')}</div></div>`).join('')}</div>
+    <p class="fb" id="swScore" aria-live="polite"></p>
+    <div class="swot" id="swBoard"></div>
+    <hr style="border:0;border-top:1px solid var(--line);width:100%">
+    <div class="act-title"><h3>Pembuat Persona</h3><span class="muted">Ubah isian, kartu persona ikut berubah.</span></div>
+    <div class="two"><div class="stack" id="pf"></div><div id="pcard"></div></div>`;
+  const drawBoard = () => { el.querySelector('#swBoard').innerHTML = 'SWOT'.split('').map(c=>`<div><h4>${c} · ${N[c]}</h4><ul>${board[c].map(t=>`<li>${t}</li>`).join('')}</ul></div>`).join(''); };
+  el.querySelectorAll('.sort-item').forEach(row => {
+    const k=+row.dataset.k;
+    row.querySelectorAll('.pill').forEach(b => b.onclick = () => {
+      if (row.dataset.ans) return; row.dataset.ans=b.dataset.v; done++;
+      const ok = b.dataset.v===F[k][1]; if(ok) right++;
+      row.classList.add(ok?'ok':'no'); b.classList.add('sel'); row.querySelectorAll('.pill').forEach(x=>x.disabled=true);
+      board[F[k][1]].push(F[k][0]);
+      if(!ok){ const s=document.createElement('span'); s.className='fb no'; s.textContent='Jawaban: '+N[F[k][1]]; row.appendChild(s); }
+      drawBoard();
+      el.querySelector('#swScore').innerHTML = done<F.length ? `${done}/${F.length} dipilah` : `<span class="fb ${right>=6?'ok':'no'}">${right} dari ${F.length} tepat.</span> Ingat: S dan W dari dalam usaha, O dan T dari luar.`;
+    });
+  });
+  drawBoard();
+  const fields = [['nama','Nama persona','Nadia'],['usia','Usia','16 tahun'],['status','Status','Siswi kelas XI, tinggal 5 km dari sekolah'],['kebiasaan','Kebiasaan','Membeli minuman dingin setiap pulang sekolah, aktif di TikTok'],['kebutuhan','Kebutuhan','Minuman segar yang harganya pas dengan uang saku'],['keluhan','Keluhan (pains)','Antrean kantin terlalu panjang saat istirahat']];
+  const per = Object.fromEntries(fields.map(f=>[f[0],f[2]]));
+  el.querySelector('#pf').innerHTML = fields.map(([k,l])=>`<div class="field"><label for="pf-${k}">${l}</label><input type="text" id="pf-${k}" data-k="${k}" value="${esc(per[k])}" maxlength="90"></div>`).join('') + '<p class="muted" style="font-size:.85rem">Isian awal hanyalah contoh. Ganti dengan data dari survei dan wawancaramu.</p>';
+  const drawP = () => { el.querySelector('#pcard').innerHTML = `<div class="persona"><div class="ph"><span class="avatar">${esc((per.nama||'?').trim().charAt(0).toUpperCase())}</span><div><b style="font-family:var(--f-display);font-size:1.2rem">${esc(per.nama)}</b><br><span class="muted">${esc(per.usia)}</span></div></div><dl><dt>Status</dt><dd>${esc(per.status)}</dd><dt>Kebiasaan</dt><dd>${esc(per.kebiasaan)}</dd><dt>Kebutuhan</dt><dd>${esc(per.kebutuhan)}</dd><dt>Keluhan</dt><dd>${esc(per.keluhan)}</dd></dl></div>`; };
+  el.querySelectorAll('#pf input').forEach(inp => inp.oninput = () => { per[inp.dataset.k]=inp.value; drawP(); });
+  drawP();
+};
+
+ACT.dt = el => {
+  const ST = [['Empathize','Mengamati dan mewawancarai pengguna'],['Define','Merumuskan masalah inti (POV)'],['Ideate','Menghasilkan banyak solusi'],['Prototype','Membuat contoh produk'],['Test','Menguji dan memperbaiki']];
+  let pool = [3,0,4,1,2], seq = [];
+  el.innerHTML = `<div class="act-title"><h3>Urutkan Tahap Design Thinking</h3><span class="muted">Klik kartu sesuai urutan yang benar.</span></div>
+    <div class="order-pool" id="pool"></div><div class="order-seq" id="seq"></div><p class="fb" id="dtMsg" aria-live="polite"></p>
+    <hr style="border:0;border-top:1px solid var(--line);width:100%">
+    <div class="act-title"><h3>Perakit POV Statement</h3><span class="muted">Isi tiga bagian dari hasil wawancaramu.</span></div>
+    <div class="two"><div class="stack">
+      <div class="field"><label for="pv1">Pengguna (siapa)</label><input type="text" id="pv1" value="Siswa yang berangkat pukul 05.30" maxlength="80"></div>
+      <div class="field"><label for="pv2">Kebutuhan (apa)</label><input type="text" id="pv2" value="sarapan yang bisa dimakan sambil berjalan" maxlength="80"></div>
+      <div class="field"><label for="pv3">Insight (mengapa)</label><input type="text" id="pv3" value="mereka tidak sempat makan di rumah dan kantin belum buka" maxlength="100"></div>
+      <p class="muted" style="font-size:.85rem">Isian awal adalah contoh.</p>
+    </div><div class="stack"><div class="pov-out" id="pvOut"></div><div id="pvTip"></div></div></div>`;
+  const draw = () => {
+    el.querySelector('#pool').innerHTML = pool.map(k=>`<button class="pill" type="button" data-k="${k}">${ST[k][0]}</button>`).join('');
+    el.querySelector('#seq').innerHTML = seq.map((k,n)=>`<div><b>${n+1}.</b>${ST[k][0]} <span class="muted">· ${ST[k][1]}</span></div>`).join('');
+    el.querySelectorAll('#pool .pill').forEach(b => b.onclick = () => {
+      const k=+b.dataset.k;
+      if (k === seq.length){ seq.push(k); pool = pool.filter(x=>x!==k); draw(); el.querySelector('#dtMsg').innerHTML = seq.length===5 ? '<span class="fb ok">Urutan benar! Ingat, tahap Test sering kembali ke Ideate atau Prototype: itulah iterasi.</span>' : ''; }
+      else { b.classList.add('shake'); setTimeout(()=>b.classList.remove('shake'),400); el.querySelector('#dtMsg').innerHTML = `<span class="fb no">${ST[k][0]} belum saatnya. Tahap ke-${seq.length+1} apa?</span>`; }
+    });
+  };
+  const pov = () => {
+    const v = [1,2,3].map(n=>el.querySelector('#pv'+n).value.trim());
+    el.querySelector('#pvOut').innerHTML = `<em>${esc(v[0]||'[Pengguna]')}</em> membutuhkan <em>${esc(v[1]||'[kebutuhan]')}</em> karena <em>${esc(v[2]||'[insight]')}</em>.`;
+    el.querySelector('#pvTip').innerHTML = say(v.every(Boolean) ? 'POV yang baik menyebut pengguna yang spesifik, bukan "semua orang". Dari POV ini, lanjutkan ke Crazy 8\'s: 8 sketsa solusi dalam 8 menit.' : 'Lengkapi ketiga bagian supaya POV-mu utuh.');
+  };
+  [1,2,3].forEach(n=> el.querySelector('#pv'+n).oninput = pov);
+  draw(); pov();
+};
+
+ACT.org = el => {
+  const A = ['Rasa','Aroma','Tekstur','Penampilan','Kemasan'];
+  const tips = {Rasa:'Atur ulang takaran gula, garam, atau bumbu; uji dua versi berdampingan.',Aroma:'Gunakan bahan lebih segar atau tambahkan bahan beraroma alami (pandan, kayu manis).',Tekstur:'Cek suhu dan waktu masak, serta perbandingan bahan kering dan cair.',Penampilan:'Perbaiki warna dan cara penyajian; pastikan bentuk tiap porsi seragam.',Kemasan:'Pilih kemasan yang rapat dan praktis, lengkapi label nama, komposisi, dan tanggal kedaluwarsa.'};
+  let D = [[4,4,3,4,3],[5,4,2,4,4],[4,3,3,5,3],[4,4,2,4,4],[5,4,3,4,4]];
+  el.innerHTML = `<div class="act-title"><h3>Simulator Uji Organoleptik</h3><span class="muted">Contoh: blind test <b>Pisang Goreng Stik Saus Gula Aren</b>, skala 1–5.</span></div>
+    <div class="tbl-wrap"><table class="org-tbl"><thead><tr><th>Panelis</th>${A.map(a=>`<th>${a}</th>`).join('')}</tr></thead><tbody id="orgB"></tbody><tfoot><tr id="orgF"></tr></tfoot></table></div>
+    <p class="muted" style="font-size:.85rem">Angka awal adalah contoh. Ganti dengan skor dari Google Form kelompokmu. Rubrik modul: 10 panelis atau lebih untuk nilai Sangat Baik.</p>
+    <div class="two"><svg viewBox="0 0 340 200" id="orgC" role="img" aria-label="Grafik rata-rata skor organoleptik"></svg><div id="orgTip"></div></div>`;
+  el.querySelector('#orgB').innerHTML = D.map((r,i)=>`<tr><td>P${i+1}</td>${r.map((v,j)=>`<td><input type="text" inputmode="numeric" maxlength="1" aria-label="Panelis ${i+1} ${A[j]}" data-i="${i}" data-j="${j}" value="${v}"></td>`).join('')}</tr>`).join('');
+  const calc = () => {
+    const avg = A.map((_,j)=> D.reduce((s,r)=>s+r[j],0)/D.length);
+    el.querySelector('#orgF').innerHTML = `<td>Rata-rata</td>${avg.map(v=>`<td>${v.toFixed(1).replace('.',',')}</td>`).join('')}`;
+    const min = Math.min(...avg), lowI = avg.indexOf(min);
+    let s=''; const x0=96, W=200;
+    [0,1,2,3,4,5].forEach(t=>{ const x=x0+t/5*W; s+=`<line class="grid" x1="${x}" y1="8" x2="${x}" y2="178"/><text class="axis-t" x="${x}" y="194" text-anchor="middle">${t}</text>`; });
+    avg.forEach((v,j)=>{ const y=14+j*33; s+=`<text class="lbl" x="${x0-8}" y="${y+15}" text-anchor="end">${A[j]}</text><rect class="${j===lowI?'bar-low':'bar-f'}" x="${x0}" y="${y}" width="${Math.max(2,v/5*W)}" height="22" rx="4"/><text class="num-t" x="${x0+v/5*W+6}" y="${y+15}">${v.toFixed(1).replace('.',',')}</text>`; });
+    el.querySelector('#orgC').innerHTML = s;
+    const all = avg.reduce((a,b)=>a+b,0)/avg.length;
+    el.querySelector('#orgTip').innerHTML = say(`Rata-rata keseluruhan <b class="mono">${all.toFixed(2).replace('.',',')}</b>. Aspek terendah: <b>${A[lowI]}</b> (${min.toFixed(1).replace('.',',')}). Prioritas iterasi versi 2: ${tips[A[lowI]]}`);
+  };
+  el.querySelectorAll('.org-tbl input').forEach(inp => inp.oninput = () => {
+    const v = parseInt(inp.value,10);
+    if (v>=1 && v<=5){ D[+inp.dataset.i][+inp.dataset.j]=v; inp.style.borderColor=''; calc(); }
+    else inp.style.borderColor='var(--err)';
+  });
+  calc();
+};
+
+ACT.caption = el => {
+  const G = [
+    {id:'hook', h:'1. Hook (kalimat pembuka)', o:[['Halo semua, ini produk kami.',0],['Ngantuk di jam pelajaran ke-7? Ini penyelamatnya.',1],['KOPI KOPI KOPI KOPI',0]]},
+    {id:'story', h:'2. Cerita produk', o:[['Kopi susu kami pakai gula aren asli dari petani Garut, diseduh pagi hari sebelum bel masuk.',1],['Pokoknya enak deh.',0],['Kami jual kopi.',0]]},
+    {id:'cta', h:'3. Ajakan (CTA)', o:[['Pesan lewat WhatsApp sebelum jam 10, cuma 30 cup per hari!',1],['Semoga suka.',0],['Terima kasih.',0]]},
+    {id:'tag', h:'4. Hashtag', o:[['#kopisusugulaaren #jajanansekolah #kopiGarut',1],['#viral #fyp #love #instagood #like4like',0],['(tanpa hashtag)',0]]}
+  ];
+  const pick = {hook:0, story:1, cta:1, tag:1};
+  const tips = {hook:'Hook harus membuat orang berhenti scroll: sebut masalah atau rasa penasaran pembeli.', story:'Ceritakan bahan, proses, atau asal resep. "Enak" saja tidak meyakinkan.', cta:'Tutup dengan ajakan yang jelas dan alasan untuk segera membeli.', tag:'Pakai hashtag yang relevan dengan produk dan lokasi, bukan hashtag umum.'};
+  el.innerHTML = `<div class="act-title"><h3>Racik Caption</h3><span class="muted">Pilih satu kalimat di tiap bagian. Pratinjau dan nilai berubah langsung.</span></div>
+    <div class="two"><div class="stack">${G.map(g=>`<fieldset class="radio-group" style="border:0;padding:0;margin:0"><h4>${g.h}</h4>${g.o.map((o,k)=>`<label class="radio-opt"><input type="radio" name="cap-${g.id}" value="${k}" ${pick[g.id]===k?'checked':''}><span>${o[0]}</span></label>`).join('')}</fieldset>`).join('')}</div>
+    <div class="stack"><div class="post"><div class="ph"><i></i>kopiburina.smk</div><div class="img"><svg viewBox="0 0 120 120" width="55%" aria-hidden="true"><path d="M34 34h52l-7 70H41z" fill="var(--surface-3)" stroke="var(--ink)" stroke-width="3"/><path d="M37 56h46l-5 48H42z" fill="var(--err)" opacity=".8"/><path d="M30 34h60" stroke="var(--ink)" stroke-width="4" stroke-linecap="round"/><path d="M66 32l10-24" stroke="var(--pri)" stroke-width="4" stroke-linecap="round"/></svg></div><div class="cap" id="capOut"></div></div><div id="capScore"></div></div></div>`;
+  const draw = () => {
+    const parts = G.map(g=>g.o[pick[g.id]]);
+    el.querySelector('#capOut').innerHTML = `<span><b>kopiburina.smk</b> ${esc(parts[0][0])}</span><span>${esc(parts[1][0])}</span><span>${esc(parts[2][0])}</span>${parts[3][0].startsWith('#')?`<span class="tags">${esc(parts[3][0])}</span>`:''}`;
+    const sc = parts.reduce((a,p)=>a+p[1],0)*25;
+    const weak = G.filter(g=>!g.o[pick[g.id]][1]).map(g=>tips[g.id]);
+    el.querySelector('#capScore').innerHTML = `<div class="struk"><div class="ln"><span>Kekuatan caption</span><span class="big">${sc}</span></div></div>` + say(weak.length ? weak.join(' ') : 'Caption lengkap: hook kuat, ada cerita, CTA jelas, hashtag relevan. Siap diunggah.');
+  };
+  el.querySelectorAll('input[type=radio]').forEach(r => r.onchange = () => { pick[r.name.slice(4)] = +r.value; draw(); });
+  draw();
+};
+
+/* ===== evaluasi akhir ===== */
+function viewEval(){
+  let idx = 0; const ans = EVAL.map(()=>null);
+  const render = () => {
+    const q = EVAL[idx];
+    main.innerHTML = `<section class="screen">
+      <div class="stack"><p class="eyebrow">Evaluasi Akhir · Unit 1–6</p><h2>Soal ${idx+1} dari ${EVAL.length}</h2>
+      <div class="bar"><i style="width:${(idx)/EVAL.length*100}%"></i></div></div>
+      <div class="panel stack"><p class="qt" style="font-weight:600">${q.q}</p>
+        <div class="opts">${q.o.map((o,j)=>`<button type="button" class="opt ${ans[idx]===j?'pick':''}" data-o="${j}"><span class="k">${'ABCD'[j]}</span><span>${o}</span></button>`).join('')}</div></div>
+      <div class="nav-foot"><button class="btn ghost" type="button" id="eB">${idx===0?'Batal, ke Peta Belajar':'Sebelumnya'}</button><button class="btn" type="button" id="eN" ${ans[idx]==null?'disabled':''}>${idx===EVAL.length-1?'Selesai & lihat rapor':'Berikutnya'}</button></div>
+    </section>`;
+    main.querySelectorAll('.opt').forEach(b => b.onclick = () => { ans[idx]=+b.dataset.o; main.querySelectorAll('.opt').forEach(x=>x.classList.toggle('pick', x===b)); document.getElementById('eN').disabled=false; });
+    document.getElementById('eB').onclick = () => { if(idx===0) go(viewMap); else { idx--; render(); } };
+    document.getElementById('eN').onclick = () => {
+      if (idx < EVAL.length-1){ idx++; render(); window.scrollTo(0,0); return; }
+      const right = ans.filter((a,k)=>a===EVAL[k].a).length;
+      S.evalScore = Math.round(right/EVAL.length*100); S.evalAns = ans; save(); go(viewRapor);
+    };
+  };
+  render();
+}
+
+/* ===== rapor ===== */
+function predikat(n){ return n>=90?['A','Sangat Baik','Melebihi capaian pembelajaran']:n>=80?['B','Baik','Mencapai capaian pembelajaran']:n>=70?['C','Cukup','Mendekati capaian pembelajaran']:['D','Perlu Bimbingan','Belum mencapai CP, perlu remedial']; }
+function viewRapor(){
+  const avg = avgUnits(), ev = S.evalScore;
+  const final = (avg!=null && ev!=null) ? Math.round(avg*0.5 + ev*0.5) : null;
+  const p = final!=null ? predikat(final) : null;
+  const tgl = new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});
+  main.innerHTML = `<section class="screen">
+    <div class="stack"><p class="eyebrow">Rapor</p><h2>Hasil belajar Lab Wirausaha</h2></div>
+    <div class="struk" id="rapor">
+      <p class="c"><b>LAB WIRAUSAHA · KIK KELAS XI</b><br>${esc(tgl)}</p><hr>
+      <div class="ln"><span>Nama</span><span>${esc(S.nama)||'-'}</span></div>
+      <div class="ln"><span>Kelas</span><span>${esc(S.kelas)||'-'}</span></div><hr>
+      ${UNITS.map((u,i)=>`<div class="ln"><span>U${i+1} ${u.short}</span><span>${S.quiz[u.id]??'—'}</span></div>`).join('')}
+      <hr><div class="ln"><span>Rata-rata kuis unit</span><span>${avg??'—'}</span></div>
+      <div class="ln"><span>Evaluasi akhir</span><span>${ev??'—'}</span></div><hr>
+      ${final!=null ? `<div class="ln"><span>Nilai akhir<br><small class="muted">50% kuis + 50% evaluasi</small></span><span class="big">${final}</span></div>
+      <p class="c" style="margin-top:10px"><span class="grade">${p[0]}</span><br><b>${p[1]}</b><br><small>${p[2]}</small></p>` : `<p class="c muted">Nilai akhir muncul setelah kuis unit dan evaluasi akhir dikerjakan.</p>`}
+    </div>
+    ${final!=null && final<70 ? say('Nilaimu belum mencapai 70. Ulangi kuis unit yang nilainya rendah, lalu kerjakan lagi Evaluasi Akhir.') : ''}
+    <p class="muted" style="text-align:center">Kumpulkan rapor ke guru dengan tangkapan layar (screenshot) atau tombol salin di bawah.</p>
+    <div class="row" style="justify-content:center"><button class="btn" type="button" id="cpy">Salin rapor</button><button class="btn ghost" type="button" id="bk">Peta Belajar</button></div>
+  </section>`;
+  document.getElementById('bk').onclick = () => go(viewMap);
+  document.getElementById('cpy').onclick = async () => {
+    const txt = `RAPOR LAB WIRAUSAHA KIK KELAS XI\nNama: ${S.nama}\nKelas: ${S.kelas}\nTanggal: ${tgl}\n` + UNITS.map((u,i)=>`Unit ${i+1} ${u.short}: ${S.quiz[u.id]??'-'}`).join('\n') + `\nRata-rata kuis: ${avg??'-'}\nEvaluasi akhir: ${ev??'-'}\nNilai akhir: ${final??'-'}${p?' ('+p[0]+', '+p[1]+')':''}`;
+    try { await navigator.clipboard.writeText(txt); toast('Rapor tersalin'); }
+    catch(e){ const r=document.createRange(); r.selectNodeContents(document.getElementById('rapor')); const s=getSelection(); s.removeAllRanges(); s.addRange(r); toast('Teks rapor dipilih, salin manual'); }
+  };
+}
+
+/* ===== tentang ===== */
+function viewAbout(){
+  main.innerHTML = `<section class="screen">
+    <div class="stack"><p class="eyebrow">Tentang</p><h2>Tentang MPI Lab Wirausaha</h2></div>
+    <div class="panel stack">
+      <p>Media Pembelajaran Interaktif untuk mata pelajaran <b>Kreativitas, Inovasi, dan Kewirausahaan (KIK)</b>, Fase F, Kelas XI. Isi diringkas dari <b>Modul Ajar KIK SMK Fase F</b> (PT Forit Asta Solusindo, Kurikulum Merdeka) dengan konteks UMKM makanan dan minuman Indonesia.</p>
+      <div class="tbl-wrap"><table><thead><tr><th>Unit</th><th>Judul</th><th>TP</th></tr></thead><tbody>${UNITS.map((u,i)=>`<tr><td class="mono">${i+1}</td><td>${u.title}</td><td class="mono">${u.tpc.join(', ')}</td></tr>`).join('')}</tbody></table></div>
+      <h3>Untuk guru</h3>
+      <ul class="clean"><li>Kuis di MPI adalah asesmen formatif. Asesmen sumatif tetap memakai rubrik di modul (Vision Board, laporan, presentasi).</li><li>Nilai tersimpan di perangkat siswa. Minta siswa mengumpulkan tangkapan layar rapor atau teks rapor yang disalin.</li><li>Konversi nilai mengikuti pedoman modul: 90–100 A, 80–89 B, 70–79 C, di bawah 70 D.</li></ul>
+    </div>
+    <div class="panel stack"><h3>Hapus kemajuan di perangkat ini</h3><p class="muted">Nama, nilai kuis, jawaban pemantik, dan refleksi akan terhapus.</p>
+      <div class="row"><button class="btn ghost small" type="button" id="rst1">Hapus kemajuan</button><button class="btn small" type="button" id="rst2" hidden style="background:var(--err);border-color:var(--err)">Ya, hapus semua</button><button class="btn ghost small" type="button" id="rst3" hidden>Batal</button></div></div>
+    <div class="row"><button class="btn ghost" type="button" id="bk">Peta Belajar</button></div>
+  </section>`;
+  const r1=document.getElementById('rst1'), r2=document.getElementById('rst2'), r3=document.getElementById('rst3');
+  r1.onclick=()=>{r1.hidden=true;r2.hidden=false;r3.hidden=false;};
+  r3.onclick=()=>{r1.hidden=false;r2.hidden=true;r3.hidden=true;};
+  r2.onclick=()=>{ S=blank(); try{localStorage.removeItem(KEY);}catch(e){} refreshTop(); go(viewCover); toast('Kemajuan dihapus'); };
+  document.getElementById('bk').onclick = () => go(viewMap);
+}
+
+document.getElementById('brandBtn').onclick = () => go(S.nama ? viewMap : viewCover);
+refreshTop();
+go(S.nama ? viewMap : viewCover);
+</script>
+
+</body>
+</html>
